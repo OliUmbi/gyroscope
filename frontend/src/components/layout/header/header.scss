@@ -1,0 +1,22 @@
+@use "../../../styles/variables";
+
+.header {
+  padding: 2rem 4rem;
+
+  @media screen and (max-width: variables.$breakpoint-l) {
+    padding: 1.5rem 3rem
+  }
+
+  @media screen and (max-width: variables.$breakpoint-m) {
+    padding: 1rem 2rem
+  }
+
+  @media screen and (max-width: variables.$breakpoint-s) {
+    padding: 0.75rem 1.5rem
+  }
+
+  @media screen and (max-width: variables.$breakpoint-xs) {
+    padding: 0.5rem 1rem
+  }
+}
+

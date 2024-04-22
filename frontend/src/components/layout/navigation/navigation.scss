@@ -1,0 +1,75 @@
+@use "../../../styles/variables";
+
+.navigation {
+  width: 100%;
+  height: 100%;
+
+  @include variables.layer-default();
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 4rem;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__link {
+    padding: 2rem;
+
+    @include variables.layer-default-hover();
+
+    &.active {
+      @include variables.layer-highlight();
+      @include variables.layer-highlight-hover();
+    }
+  }
+
+  @media screen and (max-width: variables.$breakpoint-l) {
+    &__link {
+      padding: 1.75rem;
+    }
+  }
+
+  @media screen and (max-width: variables.$breakpoint-m) {
+    &__link {
+      padding: 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: variables.$breakpoint-s) {
+    flex-direction: row;
+
+    &__logo {
+      display: none;
+    }
+
+    &__links {
+      flex-direction: row;
+    }
+
+    &__link {
+      padding: 1rem;
+    }
+  }
+
+  @media screen and (max-width: variables.$breakpoint-xs) {
+    &__link {
+      padding: 0.75rem;
+    }
+  }
+}

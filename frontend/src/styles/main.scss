@@ -1,0 +1,39 @@
+@use "variables.scss";
+@use "typography.scss";
+
+*, :before, :after {
+  box-sizing: border-box;
+  transition: 150ms ease-out all;
+}
+
+html, body, #root {
+  width: 100dvw;
+  min-height: 100dvh;
+}
+
+body {
+  margin: 0;
+  background-color: variables.$background;
+  color: variables.$text-default;
+}
+
+::selection {
+  background-color: variables.$text-highlight;
+  color: variables.$background;
+}
+
+::-webkit-scrollbar {
+  width: 0.8rem;
+  height: 0.4rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-left: 0.6rem solid transparent;
+  border-top: 0.2rem solid transparent;
+  background-color: variables.$layer-highlight-hover;
+  background-clip: content-box;
+}

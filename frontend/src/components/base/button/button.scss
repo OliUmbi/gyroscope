@@ -1,0 +1,17 @@
+@use "../../../styles/variables";
+
+.button {
+  min-width: 16rem;
+  padding: 1rem 2rem;
+  color: inherit;
+  border: none;
+  text-align: left;
+
+  @include variables.layer-default();
+  @include variables.layer-default-hover();
+
+  &.highlight {
+    @include variables.layer-highlight();
+    @include variables.layer-highlight-hover();
+  }
+}

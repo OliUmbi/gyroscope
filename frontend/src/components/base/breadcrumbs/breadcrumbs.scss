@@ -1,0 +1,16 @@
+@use "../../../styles/variables";
+
+.breadcrumbs {
+  overflow-x: scroll;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__crumb {
+    padding: 0.5rem 1rem;
+
+    @include variables.layer-default-hover();
+  }
+}

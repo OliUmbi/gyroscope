@@ -1,0 +1,15 @@
+@use "../../../styles/variables";
+
+.icon-button {
+  color: inherit;
+  padding: 1rem;
+  border: none;
+
+  @include variables.layer-default();
+  @include variables.layer-default-hover();
+
+  &.highlight {
+    @include variables.layer-highlight();
+    @include variables.layer-highlight-hover();
+  }
+}

@@ -1,0 +1,19 @@
+@use "../../../styles/variables";
+
+.input {
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__body {
+    width: 100%;
+    padding: 1rem 2rem;
+    color: variables.$text-highlight;
+    font-size: 1rem;
+    border: none;
+
+    @include variables.layer-default();
+    @include variables.layer-default-hover();
+  }
+}
