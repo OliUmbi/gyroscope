@@ -1,3 +1,9 @@
 export interface HeaderProps {
-    title: string
+    title: string,
+    actions: HeaderAction[]
+}
+
+export interface HeaderAction {
+    name: string,
+    path: string
 }

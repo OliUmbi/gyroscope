@@ -12,17 +12,20 @@ const Navigation = () => {
         </div>
         <div className="navigation__links">
           <NavLink className="navigation__link" to="/">
-            <Icon>home</Icon>
+            <Icon>space_dashboard</Icon>
           </NavLink>
-          <NavLink className="navigation__link" to="/memes">
-            <Icon>image</Icon>
+          <NavLink className="navigation__link" to="/incidents">
+            <Icon>breaking_news</Icon>
           </NavLink>
-          <NavLink className="navigation__link" to="/members">
-            <Icon>people</Icon>
+          <NavLink className="navigation__link" to="/tasks">
+            <Icon>task</Icon>
+          </NavLink>
+          <NavLink className="navigation__link" to="/schedule">
+            <Icon>event_note</Icon>
           </NavLink>
         </div>
         <NavLink className="navigation__link" to="/profile">
-          <Icon>account_circle</Icon>
+          <Icon>tune</Icon>
         </NavLink>
       </nav>
   )

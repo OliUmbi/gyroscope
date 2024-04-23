@@ -17,8 +17,8 @@ const Breadcrumbs = () => {
         const breadcrumbs: Breadcrumb[] = []
 
         breadcrumbs.push({
-            label: "home",
-            url: "/"
+            label: "root",
+            path: "/"
         })
 
         for (let i = 1; i < crumbs.length; i++) {
@@ -29,14 +29,14 @@ const Breadcrumbs = () => {
 
             let label = crumbs[i]
 
-            if (label.length > 8) {
-                label = label.substring(0, 6)
+            if (label.length > 10) {
+                label = label.substring(0, 8)
                 label += "..."
             }
 
             const breadcrumb: Breadcrumb = {
                 label: label,
-                url: crumbs.slice(0, i + 1).join("/")
+                path: crumbs.slice(0, i + 1).join("/")
             }
 
             breadcrumbs.push(breadcrumb)
@@ -54,7 +54,7 @@ const Breadcrumbs = () => {
                             breadcrumbs.map((breadcrumb, key) => (
                                 <Fragment key={key}>
                                     <Icon>chevron_right</Icon>
-                                    <Link className="breadcrumbs__crumb" to={breadcrumb.url}>
+                                    <Link className="breadcrumbs__crumb" to={breadcrumb.path}>
                                         <Text type="s" mono={true} bold={breadcrumbs.length - 1 === key} highlight={breadcrumbs.length - 1 === key}>{breadcrumb.label}</Text>
                                     </Link>
                                 </Fragment>

@@ -1,0 +1,29 @@
+@use "../../../../styles/variables";
+
+.dashboard-schedule {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  &__item {
+    min-height: 16rem;
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+
+    @include variables.layer-default();
+    @include variables.layer-default-hover();
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__body {
+  }
+}

@@ -1,0 +1,12 @@
+@use "../../../../styles/variables";
+
+.schedule-activity {
+  padding: 2rem;
+
+  display: grid;
+  grid-template-columns: 8rem 16rem;
+  align-items: center;
+  gap: 2rem;
+
+  @include variables.layer-default();
+}
