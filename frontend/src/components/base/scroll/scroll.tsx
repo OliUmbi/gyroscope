@@ -5,7 +5,6 @@ const Scroll = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        console.log(pathname)
         setTimeout(() => window.scrollTo(0, 0), 0.5)
     }, [pathname]);
 

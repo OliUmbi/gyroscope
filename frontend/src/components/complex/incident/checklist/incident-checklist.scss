@@ -1,0 +1,17 @@
+@use "../../../../styles/variables";
+
+.incident-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1rem;
+
+    @include variables.layer-default();
+  }
+}

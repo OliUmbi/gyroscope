@@ -1,6 +1,6 @@
-import {Shift} from "../enums/shift.enum.ts";
+import {ScheduleShift} from "../enums/schedule-shift.enum.ts";
 
 export interface ActivityDTO {
     time: Date
-    shift: Shift | null
+    shift: ScheduleShift | null
 }

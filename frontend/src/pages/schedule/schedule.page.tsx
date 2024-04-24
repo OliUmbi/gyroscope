@@ -1,21 +1,24 @@
 import ScheduleTimeline from "../../components/complex/schedule/timeline/schedule-timeline.tsx";
+import Linear from "../../components/layout/linear/linear.tsx";
 
 const SchedulePage = () => {
 
     return (
         <>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
-            <ScheduleTimeline/>
+            <Linear>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+                <ScheduleTimeline/>
+            </Linear>
         </>
     )
 }

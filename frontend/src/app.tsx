@@ -7,12 +7,15 @@ import NotFoundPage from "./pages/other/not-found.page.tsx";
 import ProfilePage from "./pages/profile/profile.page.tsx";
 import LoginPage from "./pages/login/login.page.tsx";
 import Header from "./components/layout/header/header.tsx";
-import IncidentsPage from "./pages/incidents/incidents.page.tsx";
-import IncidentPage from "./pages/incidents/incident.page.tsx";
-import TasksPage from "./pages/tasks/tasks.page.tsx";
-import TaskPage from "./pages/tasks/task.page.tsx";
+import IncidentsPage from "./pages/incident/incidents.page.tsx";
+import IncidentPage from "./pages/incident/incident.page.tsx";
+import TasksPage from "./pages/task/tasks.page.tsx";
+import TaskPage from "./pages/task/task.page.tsx";
 import SchedulePage from "./pages/schedule/schedule.page.tsx";
-import ScheduleUpdatePage from "./pages/schedule/schedule-update.page.tsx";
+import ScheduleEditPage from "./pages/schedule/schedule-edit.page.tsx";
+import IncidentEditPage from "./pages/incident/incident-edit.page.tsx";
+import TaskEditPage from "./pages/task/task-edit.page.tsx";
+import ProfileEditPage from "./pages/profile/profile-edit.page.tsx";
 
 const App = () => {
 
@@ -33,6 +36,17 @@ const App = () => {
             title: "Profile",
             path: "/profile",
             element: <ProfilePage/>,
+            actions: [
+                {
+                    name: "Edit",
+                    path: "edit"
+                }
+            ]
+        },
+        {
+            title: "Profile",
+            path: "/profile/edit",
+            element: <ProfileEditPage/>,
             actions: []
         },
         {
@@ -41,8 +55,8 @@ const App = () => {
             element: <IncidentsPage/>,
             actions: [
                 {
-                    name: "Create",
-                    path: "/incidents/create"
+                    name: "New",
+                    path: "new/edit"
                 }
             ]
         },
@@ -50,6 +64,17 @@ const App = () => {
             title: "Incident",
             path: "/incidents/:id",
             element: <IncidentPage/>,
+            actions: [
+                {
+                    name: "Edit",
+                    path: "edit"
+                }
+            ]
+        },
+        {
+            title: "Incident",
+            path: "/incidents/:id/edit",
+            element: <IncidentEditPage/>,
             actions: []
         },
         {
@@ -58,8 +83,8 @@ const App = () => {
             element: <TasksPage/>,
             actions: [
                 {
-                    name: "Create",
-                    path: "/reports/create"
+                    name: "New",
+                    path: "new/edit"
                 }
             ]
         },
@@ -67,6 +92,17 @@ const App = () => {
             title: "Task",
             path: "/tasks/:id",
             element: <TaskPage/>,
+            actions: [
+                {
+                    name: "Edit",
+                    path: "edit"
+                }
+            ]
+        },
+        {
+            title: "Task",
+            path: "/tasks/:id/edit",
+            element: <TaskEditPage/>,
             actions: []
         },
         {
@@ -75,15 +111,15 @@ const App = () => {
             element: <SchedulePage/>,
             actions: [
                 {
-                    name: "Update",
-                    path: "/schedule/update"
+                    name: "Edit",
+                    path: "edit"
                 }
             ]
         },
         {
-            title: "Update",
-            path: "/schedule/:id",
-            element: <ScheduleUpdatePage/>,
+            title: "Schedule",
+            path: "/schedule/edit",
+            element: <ScheduleEditPage/>,
             actions: []
         },
         {

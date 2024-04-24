@@ -1,12 +1,15 @@
 @use "../../../../styles/variables";
 
 .schedule-activity {
-  padding: 2rem;
-
   display: grid;
-  grid-template-columns: 8rem 16rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
-  gap: 2rem;
 
-  @include variables.layer-default();
+  &__head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 2rem;
+  }
 }

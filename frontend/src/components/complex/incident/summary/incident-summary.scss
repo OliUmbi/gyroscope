@@ -1,0 +1,25 @@
+@use "../../../../styles/variables";
+
+.incident-summary {
+  padding: 4rem;
+  height: 100%;
+  min-height: 32rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+
+  @include variables.layer-default();
+  @include variables.layer-default-hover();
+
+  &__details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  &__detail {
+
+  }
+}

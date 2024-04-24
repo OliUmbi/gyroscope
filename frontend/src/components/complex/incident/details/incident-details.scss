@@ -1,0 +1,21 @@
+@use "../../../../styles/variables";
+
+.incident-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  &__group {
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    @include variables.layer-default();
+  }
+
+  &__item {
+  }
+}

@@ -19,7 +19,7 @@ const Header = (props: HeaderProps) => {
                 {
                     props.actions.map((action, key) => (
                         <Button onClick={() => navigate(action.path)} highlight={key === props.actions.length - 1} key={key}>
-                            <Text type="p" mono={false} bold={false} highlight={true}>{action.name}</Text>
+                            <Text type="p" mono={false} bold={true} highlight={true}>{action.name}</Text>
                         </Button>
                     ))
                 }

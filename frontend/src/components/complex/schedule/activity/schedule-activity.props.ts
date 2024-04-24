@@ -1,7 +1,7 @@
 import {ActivityDTO} from "../../../../dtos/Activity.dto.ts";
-import {Shift} from "../../../../enums/shift.enum.ts";
+import {ScheduleShift} from "../../../../enums/schedule-shift.enum.ts";
 
 export interface ScheduleActivityProps {
     activity: ActivityDTO,
-    onUpdate: (shift: Shift) => void
+    onUpdate: (shift: ScheduleShift) => void
 }
