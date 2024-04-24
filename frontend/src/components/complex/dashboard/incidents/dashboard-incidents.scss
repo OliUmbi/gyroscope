@@ -3,10 +3,16 @@
 .dashboard-incidents {
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 
   &__item {
     padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
 
     @include variables.layer-default();
     @include variables.layer-default-hover();

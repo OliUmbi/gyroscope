@@ -6,19 +6,20 @@ const DashboardIncidents = () => {
     return (
         <div className="dashboard-incidents">
             <div className="dashboard-incidents__item">
-                <Text type="p" mono={true} bold={false} highlight={false}>Incidents</Text>
+                <Text type="p" mono={true} bold={false} highlight={false}>Critical</Text>
+                <Text type="h1" mono={false} bold={true} highlight={true}>4</Text>
             </div>
             <div className="dashboard-incidents__item">
-                <Text type="p" mono={true} bold={false} highlight={false}>Open</Text>
-                <Text type="h3" mono={false} bold={true} highlight={true}>12</Text>
+                <Text type="p" mono={true} bold={false} highlight={false}>High</Text>
+                <Text type="h1" mono={false} bold={true} highlight={true}>2</Text>
             </div>
             <div className="dashboard-incidents__item">
-                <Text type="p" mono={true} bold={false} highlight={false}>Unassigned</Text>
-                <Text type="h3" mono={false} bold={true} highlight={true}>5</Text>
+                <Text type="p" mono={true} bold={false} highlight={false}>Medium</Text>
+                <Text type="h1" mono={false} bold={true} highlight={true}>6</Text>
             </div>
             <div className="dashboard-incidents__item">
-                <Text type="p" mono={true} bold={false} highlight={false}>Closed</Text>
-                <Text type="h3" mono={false} bold={true} highlight={true}>6</Text>
+                <Text type="p" mono={true} bold={false} highlight={false}>Low</Text>
+                <Text type="h1" mono={false} bold={true} highlight={true}>3</Text>
             </div>
         </div>
     )

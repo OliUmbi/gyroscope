@@ -18,7 +18,7 @@ const TaskBoard = () => {
                 </Link>
             </div>
             <div className="task-board__column">
-                <Text type="h3" mono={false} bold={true} highlight={true}>ToDo's</Text>
+                <Text type="h3" mono={false} bold={true} highlight={true}>ToDo</Text>
                 <Link to="/tasks/1234">
                     <div className="task-board__item">
                         <Text type="s" mono={true} bold={false} highlight={false}>HIGH</Text>
@@ -57,7 +57,7 @@ const TaskBoard = () => {
                 </Link>
             </div>
             <div className="task-board__column">
-                <Text type="h3" mono={false} bold={true} highlight={true}>Waiting</Text>
+                <Text type="h3" mono={false} bold={true} highlight={true}>On hold</Text>
                 <Link to="/tasks/1234">
                     <div className="task-board__item">
                         <Text type="s" mono={true} bold={false} highlight={false}>HIGH</Text>

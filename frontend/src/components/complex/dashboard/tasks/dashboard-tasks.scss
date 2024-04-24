@@ -2,13 +2,32 @@
 
 .dashboard-tasks {
 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
 
   &__item {
     padding: 2rem;
 
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
     @include variables.layer-default();
     @include variables.layer-default-hover();
+  }
+
+  &__progress {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__bar {
+    height: 2rem;
+
+    @include variables.layer-highlight();
+    @include variables.layer-highlight-hover();
   }
 }

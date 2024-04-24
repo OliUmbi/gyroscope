@@ -1,7 +1,7 @@
 import "./app.scss";
 import Navigation from "./components/layout/navigation/navigation.tsx";
 import Content from "./components/layout/content/content.tsx";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import DashboardPage from "./pages/dashboard/dashboard.page.tsx";
 import NotFoundPage from "./pages/other/not-found.page.tsx";
 import ProfilePage from "./pages/profile/profile.page.tsx";
@@ -16,6 +16,7 @@ import ScheduleEditPage from "./pages/schedule/schedule-edit.page.tsx";
 import IncidentEditPage from "./pages/incident/incident-edit.page.tsx";
 import TaskEditPage from "./pages/task/task-edit.page.tsx";
 import ProfileEditPage from "./pages/profile/profile-edit.page.tsx";
+import {useEffect, useRef} from "react";
 
 const App = () => {
 
@@ -130,6 +131,15 @@ const App = () => {
         }
     ]
 
+    const {pathname} = useLocation();
+    const content = useRef<HTMLDivElement | null>(null)
+
+    useEffect(() => {
+        if (content.current !== null) {
+            content.current.scroll({behavior: "smooth", top: 0, left: 0})
+        }
+    }, [pathname]);
+
     return (
         <div className="app">
             <div className="app__navigation">
@@ -143,7 +153,7 @@ const App = () => {
                                 <div className="app__header">
                                     <Header title={page.title} actions={page.actions}/>
                                 </div>
-                                <div className="app__content">
+                                <div className="app__content" ref={content}>
                                     <Content>
                                         {page.element}
                                     </Content>

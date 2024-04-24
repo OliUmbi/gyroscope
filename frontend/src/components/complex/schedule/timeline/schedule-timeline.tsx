@@ -74,7 +74,7 @@ const ScheduleTimeline = () => {
     const focus = useRef<HTMLDivElement | null>(null);
 
     const scroll = () => {
-        if (focus !== null && focus.current !== null) {
+        if (focus.current !== null) {
             focus.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
         }
     }
