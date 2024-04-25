@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -16,4 +17,6 @@ public class ProfileDTO extends MetaDTO {
     private UUID id;
     private String name;
     private String password;
+
+    private List<ProfileSessionDTO> profileSessionDTOs;
 }

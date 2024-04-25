@@ -15,7 +15,6 @@ import SchedulePage from "./pages/schedule/schedule.page.tsx";
 import ScheduleEditPage from "./pages/schedule/schedule-edit.page.tsx";
 import IncidentEditPage from "./pages/incident/incident-edit.page.tsx";
 import TaskEditPage from "./pages/task/task-edit.page.tsx";
-import ProfileEditPage from "./pages/profile/profile-edit.page.tsx";
 import {useEffect, useRef} from "react";
 
 const App = () => {
@@ -37,17 +36,6 @@ const App = () => {
             title: "Profile",
             path: "/profile",
             element: <ProfilePage/>,
-            actions: [
-                {
-                    name: "Edit",
-                    path: "edit"
-                }
-            ]
-        },
-        {
-            title: "Profile",
-            path: "/profile/edit",
-            element: <ProfileEditPage/>,
             actions: []
         },
         {

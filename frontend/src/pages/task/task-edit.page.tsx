@@ -8,7 +8,6 @@ const TaskEditPage = () => {
     return (
         <>
             <Linear>
-
                 <TaskEditDetails/>
             </Linear>
             <Button onClick={() => {}} highlight={false}>
