@@ -6,8 +6,9 @@ CREATE FUNCTION updated_time() RETURNS TRIGGER
     LANGUAGE plpgsql AS
 $$
 BEGIN
-    NEW.updated := current_timestamp;
-    RETURN NEW;
+    NEW.updated
+:= current_timestamp;
+RETURN NEW;
 END
 $$;
 
@@ -30,7 +31,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON profile
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 DROP TABLE IF EXISTS profile_session CASCADE;
 CREATE TABLE profile_session
@@ -49,7 +50,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON profile_session
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 ----------------
 -- discussion --
@@ -68,7 +69,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON discussion
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 DROP TABLE IF EXISTS discussion_comment CASCADE;
 CREATE TABLE discussion_comment
@@ -87,7 +88,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON discussion_comment
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 --------------
 -- incident --
@@ -97,7 +98,7 @@ CREATE TABLE incident
 (
     id                  UUID         NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     creator_profile_id  UUID         NOT NULL REFERENCES profile (id),
-    assignee_profile_id UUID         NOT NULL REFERENCES profile (id),
+    assignee_profile_id UUID NULL REFERENCES profile (id),
     discussion_id       UUID         NOT NULL REFERENCES discussion (id),
     title               VARCHAR(128) NOT NULL,
     system              VARCHAR(64)  NOT NULL,
@@ -115,7 +116,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON incident
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 DROP TABLE IF EXISTS incident_check CASCADE;
 CREATE TABLE incident_check
@@ -134,7 +135,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON incident_check
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 ----------
 -- task --
@@ -144,7 +145,7 @@ CREATE TABLE task
 (
     id                  UUID         NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     creator_profile_id  UUID         NOT NULL REFERENCES profile (id),
-    assignee_profile_id UUID         NOT NULL REFERENCES profile (id),
+    assignee_profile_id UUID NULL REFERENCES profile (id),
     discussion_id       UUID         NOT NULL REFERENCES discussion (id),
     title               VARCHAR(128) NOT NULL,
     task_status         VARCHAR(32)  NOT NULL,
@@ -159,7 +160,7 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON task
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
 --------------
 -- schedule --
@@ -181,5 +182,5 @@ CREATE TRIGGER trigger_updated_time
     BEFORE UPDATE
     ON schedule
     FOR EACH ROW
-EXECUTE FUNCTION updated_time();
+    EXECUTE FUNCTION updated_time();
 
