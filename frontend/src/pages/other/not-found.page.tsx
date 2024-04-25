@@ -9,7 +9,7 @@ const NotFoundPage = () => {
   return (
       <>
         <Button onClick={() => navigate(-1)} highlight={false}>
-          <Text type="p" mono={false} bold={false} highlight={true}>Go back</Text>
+          <Text type="p" mono={false} bold={true} highlight={true}>Go back</Text>
         </Button>
       </>
   )

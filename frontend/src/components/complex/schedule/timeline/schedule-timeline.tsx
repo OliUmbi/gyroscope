@@ -62,11 +62,11 @@ const ScheduleTimeline = () => {
             time: new Date(Date.now() + 10*3600000)
         },
         {
-            shift: ScheduleShift.BREAK,
+            shift: null,
             time: new Date(Date.now() + 11*3600000)
         },
         {
-            shift: ScheduleShift.SLEEP,
+            shift: null,
             time: new Date(Date.now() + 12*3600000)
         }
     ]
@@ -89,6 +89,8 @@ const ScheduleTimeline = () => {
                 return "monitor";
             case ScheduleShift.WORK:
                 return "terminal";
+            default:
+                return "remove_selection";
         }
     }
 

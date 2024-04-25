@@ -14,12 +14,12 @@ const TaskDetails = () => {
                 <Text type="p" mono={false} bold={true} highlight={true}>HIGH</Text>
             </div>
             <div className="task-details__item">
-                <Text type="s" mono={true} bold={false} highlight={false}>Creator</Text>
-                <Text type="p" mono={false} bold={true} highlight={true}>Umbricht</Text>
-            </div>
-            <div className="task-details__item">
                 <Text type="s" mono={true} bold={false} highlight={false}>Assigned</Text>
                 <Text type="p" mono={false} bold={true} highlight={true}>Loosli</Text>
+            </div>
+            <div className="task-details__item">
+                <Text type="s" mono={true} bold={false} highlight={false}>Creator</Text>
+                <Text type="p" mono={false} bold={true} highlight={true}>Umbricht</Text>
             </div>
         </div>
     )

@@ -1,0 +1,18 @@
+@use "../../../../styles/variables";
+
+.incident-edit-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+  }
+}
