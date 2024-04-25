@@ -79,7 +79,7 @@ const ScheduleTimeline = () => {
         }
     }
 
-    const icon = (shift: ScheduleShift): string => {
+    const icon = (shift: ScheduleShift | null): string => {
         switch (shift) {
             case ScheduleShift.SLEEP:
                 return "bed";

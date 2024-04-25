@@ -1,6 +1,6 @@
 export enum IncidentSeverity {
-    LOW = "LOW",
-    MEDIUM = "MEDIUM",
+    CRITICAL = "CRITICAL",
     HIGH = "HIGH",
-    CRITICAL = "CRITICAL"
+    MEDIUM = "MEDIUM",
+    LOW = "LOW"
 }

@@ -10,8 +10,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 1rem;
 
     @include variables.layer-default();
+  }
+
+  &__body {
+    width: 100%;
+    padding: 1rem;
   }
 }

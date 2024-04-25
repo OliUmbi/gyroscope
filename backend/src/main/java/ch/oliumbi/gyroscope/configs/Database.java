@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.configs;
+package ch.oliumbi.gyroscope.configs;
 
 import ch.oliumbi.compass.sql.PostgreSql;
 import org.springframework.stereotype.Component;

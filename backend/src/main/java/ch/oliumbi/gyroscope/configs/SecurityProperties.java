@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.configs;
+package ch.oliumbi.gyroscope.configs;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class SecurityProperties {
 
   private String header;
-  private Long expiration;
+  private Long expirationInHours;
 
   /**
    * Define api paths to exclude them from token authentication

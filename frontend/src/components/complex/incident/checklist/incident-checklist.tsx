@@ -22,7 +22,7 @@ const IncidentChecklist = () => {
             checked: true,
         },
         {
-            name: "Update firewall",
+            name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit blandit. ",
             checked: false,
         },
         {
@@ -46,7 +46,9 @@ const IncidentChecklist = () => {
                     <div className="incident-checklist__item" key={key}>
                         <IconButton onClick={() => {
                         }} highlight={false}>{item.checked ? "check_box" : "check_box_outline_blank"}</IconButton>
-                        <Text type="p" mono={false} bold={true} highlight={true}>{item.name}</Text>
+                        <div className="incident-checklist__body">
+                            <Text type="p" mono={false} bold={true} highlight={true}>{item.name}</Text>
+                        </div>
                     </div>
                 ))
             }

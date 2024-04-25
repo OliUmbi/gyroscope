@@ -1,6 +1,6 @@
 export enum ScheduleShift {
-    SLEEP = "SLEEP",
-    BREAK = "BREAK",
     MONITORING = "MONITORING",
-    WORK = "WORK"
+    WORK = "WORK",
+    SLEEP = "SLEEP",
+    BREAK = "BREAK"
 }

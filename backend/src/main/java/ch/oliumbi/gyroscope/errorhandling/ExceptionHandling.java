@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.errorhandling;
+package ch.oliumbi.gyroscope.errorhandling;
 
 import ch.oliumbi.cia.dtos.ErrorDTO;
 import org.slf4j.Logger;

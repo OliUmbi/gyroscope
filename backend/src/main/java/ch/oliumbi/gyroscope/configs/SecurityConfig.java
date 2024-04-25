@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.configs;
+package ch.oliumbi.gyroscope.configs;
 
 import java.util.Arrays;
 import org.springframework.context.annotation.Bean;

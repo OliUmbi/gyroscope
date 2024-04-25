@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.errorhandling;
+package ch.oliumbi.gyroscope.errorhandling;
 
 public class ForbiddenException extends RuntimeException {
 

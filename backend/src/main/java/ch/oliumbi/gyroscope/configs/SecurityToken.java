@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.configs;
+package ch.oliumbi.gyroscope.configs;
 
 import ch.oliumbi.cia.implementation.member.dtos.MemberDTO;
 import java.util.Collections;

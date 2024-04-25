@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.configs;
+package ch.oliumbi.gyroscope.configs;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "security")
+@ConfigurationProperties(prefix = "database")
 public class DatabaseProperties {
 
   private String host;

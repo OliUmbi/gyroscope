@@ -1,4 +1,4 @@
-package ch.oliumbi.cia.configs;
+package ch.oliumbi.gyroscope.configs;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,5 +1,5 @@
 export enum IncidentType {
-    SUSPICION = "SUSPICION",
+    ATTACK = "ATTACK",
     ATTEMPT = "ATTEMPT",
-    ATTACK = "ATTACK"
+    SUSPICION = "SUSPICION"
 }
