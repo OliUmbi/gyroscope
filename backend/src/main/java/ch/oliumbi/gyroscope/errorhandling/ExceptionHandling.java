@@ -1,6 +1,5 @@
 package ch.oliumbi.gyroscope.errorhandling;
 
-import ch.oliumbi.cia.dtos.ErrorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ch.oliumbi.gyroscope.broker.dtos.ErrorDTO;
 
 @ControllerAdvice
 public class ExceptionHandling {
