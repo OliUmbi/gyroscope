@@ -1,21 +1,97 @@
-import Comment from "../../components/complex/comment/comment.tsx";
+import Discussion from "../../components/complex/discussion/discussion.tsx";
 import Linear from "../../components/layout/linear/linear.tsx";
 import Text from "../../components/base/text/text.tsx";
-import TaskDetails from "../../components/complex/task/details/task-details.tsx";
+import TaskDetail from "../../components/complex/task/detail/task-detail.tsx";
+import {useParams} from "react-router-dom";
+import useSubscribe from "../../hooks/use-subscribe.ts";
+import usePublish from "../../hooks/use-publish.ts";
+import {useEffect} from "react";
+import {IdRequest} from "../../requests/id.request.ts";
+import {locale} from "../../utils/locale.util.ts";
+import {dateConvert} from "../../utils/date.util.ts";
+import SkeletonText from "../../components/base/skeleton-text/skeleton-text.tsx";
+import Split from "../../components/layout/split/split.tsx";
+import Skeleton from "../../components/base/skeleton/skeleton.tsx";
+import {TaskResponse} from "../../responses/task.response.ts";
 
 const TaskPage = () => {
+
+    let {id} = useParams();
+    const [taskResponse] = useSubscribe<TaskResponse>("/task/loadId")
+    const [loadTask] = usePublish("/load/task")
+
+    useEffect(() => {
+        if (id) {
+            let idRequest: IdRequest = {
+                id: id
+            }
+
+            loadTask(idRequest)
+        }
+    }, [id]);
 
     return (
         <>
             <Linear>
                 <div>
-                    <Text type="s" mono={true} bold={false} highlight={false}>24.04.2024 15:02</Text>
-                    <Text type="h2" mono={false} bold={true} highlight={true}>Dockerize service XY</Text>
+                    {
+                        taskResponse ? (
+                            <Text type="s" mono={true} bold={false} highlight={false}>{locale(dateConvert(taskResponse.created))}</Text>
+                        ) : (
+                            <SkeletonText type="s"/>
+                        )
+                    }
+                    {
+                        taskResponse ? (
+                            <Text type="h2" mono={false} bold={true} highlight={true}>{taskResponse.title}</Text>
+                        ) : (
+                            <SkeletonText type="h2"/>
+                        )
+                    }
                 </div>
-                <TaskDetails/>
+                <Split>
+                    <Split>
+                        {
+                            taskResponse ? (
+                                <TaskDetail name="Status" value={taskResponse.status}/>
+                            ) : (
+                                <Skeleton height={8}/>
+                            )
+                        }
+                        {
+                            taskResponse ? (
+                                <TaskDetail name="Priority" value={taskResponse.priority}/>
+                            ) : (
+                                <Skeleton height={8}/>
+                            )
+                        }
+                    </Split>
+                    <Split>
+                        {
+                            taskResponse ? (
+                                <TaskDetail name="Assignee" value={taskResponse.assignee.name}/>
+                            ) : (
+                                <Skeleton height={8}/>
+                            )
+                        }
+                        {
+                            taskResponse ? (
+                                <TaskDetail name="Creator" value={taskResponse.creator.name}/>
+                            ) : (
+                                <Skeleton height={8}/>
+                            )
+                        }
+                    </Split>
+                </Split>
             </Linear>
             <Linear>
-                <Comment/>
+                {
+                    taskResponse ? (
+                        <Discussion discussion={taskResponse.discussion}/>
+                    ) : (
+                        <Skeleton height={32}/>
+                    )
+                }
             </Linear>
         </>
     )

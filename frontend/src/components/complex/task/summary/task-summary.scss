@@ -1,0 +1,15 @@
+@use "../../../../styles/variables";
+
+.task-summary {
+
+  min-height: 10rem;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @include variables.layer-default();
+  @include variables.layer-default-hover();
+}

@@ -30,14 +30,12 @@ public class IncidentController {
     @MessageMapping("/load/incidents")
     @SendTo("/incident/loadAll")
     public List<IncidentResponse> load() {
-
         return incidentMapper.load();
     }
 
     @MessageMapping("/load/incident")
     @SendTo("/incident/loadId")
     public IncidentResponse load(IdRequest idRequest) {
-
         return incidentMapper.load(idRequest.getId());
     }
 }

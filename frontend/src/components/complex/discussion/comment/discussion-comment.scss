@@ -1,7 +1,8 @@
 @use "../../../../styles/variables";
 
-.task-board {
+
+.discussion-comment {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 12rem 1fr;
   gap: 2rem;
 }

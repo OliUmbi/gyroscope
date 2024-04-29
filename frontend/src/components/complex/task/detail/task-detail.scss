@@ -1,0 +1,7 @@
+@use "../../../../styles/variables";
+
+.task-detail {
+  padding: 2rem;
+
+  @include variables.layer-default();
+}

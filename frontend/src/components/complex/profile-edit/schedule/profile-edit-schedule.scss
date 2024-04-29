@@ -1,0 +1,17 @@
+@use "../../../../styles/variables";
+
+.profile-schedule {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+
+  &__head {
+    padding-right: 2rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 2rem;
+  }
+}

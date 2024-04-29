@@ -6,23 +6,17 @@ import useSubscribe from "../../hooks/use-subscribe.ts";
 import {ProfileResponse} from "../../responses/profile.response.ts";
 import usePublish from "../../hooks/use-publish.ts";
 import {useEffect} from "react";
-import {IdRequest} from "../../requests/id.request.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import ProfileSession from "../../components/complex/profile/session/profile-session.tsx";
-import {k} from "vite/dist/node/types.d-jgA8ss1A";
 import SkeletonText from "../../components/base/skeleton-text/skeleton-text.tsx";
 
 const ProfilePage = () => {
 
-    const [profileResponse] = useSubscribe<ProfileResponse>("/profile/loadId")
-    const [loadProfile] = usePublish("/load/profile")
+    const [profileResponse] = useSubscribe<ProfileResponse>("/profile/loadSessionId")
+    const [loadProfileSession] = usePublish("/load/profileSession")
 
     useEffect(() => {
-        let idRequest: IdRequest = {
-            id: "aaaaaaa1-bbb1-cccc-dddd-eeeeeeeeeeee"
-        }
-
-        loadProfile(idRequest)
+        loadProfileSession("")
     }, []);
 
     return (

@@ -1,6 +1,6 @@
 import Text from "../../components/base/text/text.tsx";
 import IncidentCheck from "../../components/complex/incident/check/incident-check.tsx";
-import Comment from "../../components/complex/comment/comment.tsx";
+import Discussion from "../../components/complex/discussion/discussion.tsx";
 import IncidentDetail from "../../components/complex/incident/detail/incident-detail.tsx";
 import Split from "../../components/layout/split/split.tsx";
 import Linear from "../../components/layout/linear/linear.tsx";
@@ -14,14 +14,12 @@ import SkeletonText from "../../components/base/skeleton-text/skeleton-text.tsx"
 import {locale} from "../../utils/locale.util.ts";
 import {dateConvert} from "../../utils/date.util.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
-import incidentDetail from "../../components/complex/incident/detail/incident-detail.tsx";
-import {k} from "vite/dist/node/types.d-jgA8ss1A";
 
 const IncidentPage = () => {
 
     let {id} = useParams();
     const [incidentResponse] = useSubscribe<IncidentResponse>("/incident/loadId")
-    const [loadIncidents] = usePublish("/load/incident")
+    const [loadIncident] = usePublish("/load/incident")
 
     useEffect(() => {
         if (id) {
@@ -29,7 +27,7 @@ const IncidentPage = () => {
                 id: id
             }
 
-            loadIncidents(idRequest)
+            loadIncident(idRequest)
         }
     }, [id]);
 
@@ -99,7 +97,13 @@ const IncidentPage = () => {
                 </Split>
             </Linear>
             <Linear>
-                <Comment/>
+                {
+                    incidentResponse ? (
+                        <Discussion discussion={incidentResponse.discussion}/>
+                    ) : (
+                        <Skeleton height={32}/>
+                    )
+                }
             </Linear>
         </>
     )
