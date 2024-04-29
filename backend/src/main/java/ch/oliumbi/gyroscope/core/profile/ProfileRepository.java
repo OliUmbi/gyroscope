@@ -158,6 +158,31 @@ public class ProfileRepository {
                 .orElseThrow(() -> new InternalServerErrorException("failed to load profile schedule timeline with profile id: " + profileId));
     }
 
+    public List<ProfileScheduleDTO> loadScheduleDashboard(UUID profileId) {
+        return database.query("""
+                                SELECT  id,
+                                        profile_id,
+                                        time,
+                                        profile_schedule_shift,
+                                        created,
+                                        updated
+                                FROM    profile_schedule
+                                WHERE   deleted = FALSE
+                                AND     profile_id = :profileId
+                                AND     time > current_timestamp - interval '1 hours'
+                                LIMIT   1
+                                INTO    id,
+                                        profileId,
+                                        time,
+                                        profileScheduleShift,
+                                        created,
+                                        updated
+                                """,
+                        ProfileScheduleDTO.class,
+                        new Input("profileId", profileId))
+                .orElseThrow(() -> new InternalServerErrorException("failed to load profile schedule timeline with profile id: " + profileId));
+    }
+
     public void createSchedule(ProfileScheduleDTO profileScheduleDTO) {
         database.update("""
                                 INSERT INTO profile_schedule (

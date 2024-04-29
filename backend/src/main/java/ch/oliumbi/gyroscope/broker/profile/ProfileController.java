@@ -3,7 +3,6 @@ package ch.oliumbi.gyroscope.broker.profile;
 import ch.oliumbi.gyroscope.broker.profile.requests.ProfileCreateScheduleRequest;
 import ch.oliumbi.gyroscope.broker.profile.requests.ProfileUpdateScheduleRequest;
 import ch.oliumbi.gyroscope.broker.profile.responses.ProfileResponse;
-import ch.oliumbi.gyroscope.broker.requests.IdRequest;
 import ch.oliumbi.gyroscope.core.profile.ProfileService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -39,6 +38,12 @@ public class ProfileController {
     @SendTo("/profile/loadScheduleAll")
     public List<ProfileResponse> loadSchedules() {
         return profileMapper.loadSchedule();
+    }
+
+    @MessageMapping("/dashboard/profileSchedules")
+    @SendTo("/profile/loadScheduleDashboard")
+    public List<ProfileResponse> loadScheduleDashboard() {
+        return profileMapper.loadScheduleDashboard();
     }
 
     @MessageMapping("/create/profileSchedule")

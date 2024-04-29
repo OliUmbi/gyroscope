@@ -53,6 +53,16 @@ public class ProfileService {
         return profileDTOs;
     }
 
+    public List<ProfileDTO> loadScheduleDashboard() {
+        List<ProfileDTO> profileDTOs = profileRepository.load();
+
+        for (ProfileDTO profileDTO : profileDTOs) {
+            profileDTO.setProfileScheduleDTOs(profileRepository.loadScheduleDashboard(profileDTO.getId()));
+        }
+
+        return profileDTOs;
+    }
+
     public UUID createSchedule(ProfileScheduleShift profileScheduleShift) {
         UUID id = UUID.randomUUID();
 
