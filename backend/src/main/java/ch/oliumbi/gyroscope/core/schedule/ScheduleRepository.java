@@ -19,7 +19,7 @@ public class ScheduleRepository {
         this.database = database;
     }
 
-    public List<TaskDTO> load() {
+    public List<ScheduleDTO> load() {
         return database.query("""
                                 SELECT  id,
                                         profile_id,
@@ -38,11 +38,11 @@ public class ScheduleRepository {
                                         created,
                                         updated
                                 """,
-                        TaskDTO.class)
+                        ScheduleDTO.class)
                 .orElseThrow(() -> new InternalServerErrorException("failed to load schedules"));
     }
 
-    public TaskDTO load(UUID profileId) {
+    public ScheduleDTO load(UUID profileId) {
         return database.querySingle("""
                                 SELECT  id,
                                         profile_id,
@@ -61,7 +61,7 @@ public class ScheduleRepository {
                                         created,
                                         updated
                                 """,
-                        TaskDTO.class,
+                        ScheduleDTO.class,
                         new Input("profileId", profileId))
                 .orElseThrow(() -> new InternalServerErrorException("failed to load schedule with profile id: " + profileId));
     }

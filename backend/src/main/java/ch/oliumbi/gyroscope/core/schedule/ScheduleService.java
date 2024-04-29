@@ -18,11 +18,11 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public List<TaskDTO> load() {
+    public List<ScheduleDTO> load() {
         return scheduleRepository.load();
     }
 
-    public TaskDTO load(UUID id) {
+    public ScheduleDTO load(UUID id) {
         return scheduleRepository.load(id);
     }
 

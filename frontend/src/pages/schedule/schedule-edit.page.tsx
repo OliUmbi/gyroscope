@@ -1,5 +1,5 @@
 import ScheduleActivity from "../../components/complex/schedule/activity/schedule-activity.tsx";
-import {ActivityDTO} from "../../dtos/Activity.dto.ts";
+import {ActivityDTO} from "../../responses/Activity.dto.ts";
 import {useState} from "react";
 import Linear from "../../components/layout/linear/linear.tsx";
 import {ScheduleShift} from "../../enums/schedule-shift.enum.ts";

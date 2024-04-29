@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ch.oliumbi.gyroscope.broker.dtos.ErrorDTO;
+import ch.oliumbi.gyroscope.broker.responses.ErrorResponses;
 
 @ControllerAdvice
 public class ExceptionHandling {
@@ -21,80 +21,80 @@ public class ExceptionHandling {
   @ResponseBody
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorDTO exceptionHandler(Exception exception) {
+  public ErrorResponses exceptionHandler(Exception exception) {
     LOG.error(exception.getMessage(), exception);
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(InternalServerErrorException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorDTO exceptionHandler(InternalServerErrorException exception) {
+  public ErrorResponses exceptionHandler(InternalServerErrorException exception) {
     LOG.error(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(BadCredentialsException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorDTO exceptionHandler(BadCredentialsException exception) {
+  public ErrorResponses exceptionHandler(BadCredentialsException exception) {
     LOG.warn(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(UnauthorizedException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorDTO exceptionHandler(UnauthorizedException exception) {
+  public ErrorResponses exceptionHandler(UnauthorizedException exception) {
     LOG.warn(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(InsufficientAuthenticationException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
-  public ErrorDTO exceptionHandler(InsufficientAuthenticationException exception) {
+  public ErrorResponses exceptionHandler(InsufficientAuthenticationException exception) {
     LOG.warn(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(AccessDeniedException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
-  public ErrorDTO exceptionHandler(AccessDeniedException exception) {
+  public ErrorResponses exceptionHandler(AccessDeniedException exception) {
     LOG.warn(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(ForbiddenException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
-  public ErrorDTO exceptionHandler(ForbiddenException exception) {
+  public ErrorResponses exceptionHandler(ForbiddenException exception) {
     LOG.warn(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(BadRequestException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorDTO exceptionHandler(BadRequestException exception) {
+  public ErrorResponses exceptionHandler(BadRequestException exception) {
     LOG.info(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(ServletRequestBindingException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorDTO exceptionHandler(ServletRequestBindingException exception) {
+  public ErrorResponses exceptionHandler(ServletRequestBindingException exception) {
     LOG.info(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 
   @ResponseBody
   @ExceptionHandler(NotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public ErrorDTO exceptionHandler(NotFoundException exception) {
+  public ErrorResponses exceptionHandler(NotFoundException exception) {
     LOG.info(exception.getMessage());
-    return new ErrorDTO(exception.getMessage());
+    return new ErrorResponses(exception.getMessage());
   }
 }

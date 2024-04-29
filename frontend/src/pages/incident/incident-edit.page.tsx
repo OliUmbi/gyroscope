@@ -18,7 +18,7 @@ const IncidentEditPage = () => {
 
     useEffect(() => {
         console.log(valueSuccess)
-    }, []);
+    }, [valueSuccess]);
 
     return (
         <>

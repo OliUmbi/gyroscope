@@ -1,0 +1,15 @@
+@use "../../../../styles/variables";
+
+.incident-check {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  @include variables.layer-default();
+
+  &__body {
+    width: 100%;
+    padding: 1rem;
+  }
+}

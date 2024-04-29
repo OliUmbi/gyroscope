@@ -24,8 +24,4 @@ public class TaskDTO extends MetaDTO {
     private String title;
     private TaskStatus taskStatus;
     private TaskPriority taskPriority;
-
-    private ProfileDTO creatorProfileDTO;
-    private ProfileDTO assigneeProfileDTO;
-    private DiscussionDTO discussionDTO;
 }

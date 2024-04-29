@@ -20,6 +20,4 @@ public class ScheduleDTO extends MetaDTO {
     private UUID profileId;
     private LocalDateTime time;
     private ScheduleShift scheduleShift;
-
-    private ProfileDTO profileDTO;
 }

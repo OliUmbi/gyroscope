@@ -18,6 +18,4 @@ public class DiscussionCommentDTO extends MetaDTO {
     private UUID discussionId;
     private UUID profileId;
     private String body;
-
-    private ProfileDTO profileDTO;
 }

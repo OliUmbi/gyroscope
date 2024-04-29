@@ -32,7 +32,4 @@ public class IncidentDTO extends MetaDTO {
     private IncidentType incidentType;
 
     private List<IncidentCheckDTO> incidentCheckDTOs;
-    private ProfileDTO creatorProfileDTO;
-    private ProfileDTO assigneeProfileDTO;
-    private DiscussionDTO discussionDTO;
 }

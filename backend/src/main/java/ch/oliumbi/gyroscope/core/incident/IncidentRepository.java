@@ -98,7 +98,7 @@ public class IncidentRepository {
                                         updated
                                 FROM    incident_check
                                 WHERE   deleted = FALSE
-                                AND     discussion_id = :incidentId
+                                AND     incident_id = :incidentId
                                 ORDER BY created
                                 INTO    id,
                                         incidentId,

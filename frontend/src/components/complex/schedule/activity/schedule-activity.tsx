@@ -10,8 +10,8 @@ const ScheduleActivity = (props: ScheduleActivityProps) => {
     return (
         <div className="schedule-activity">
             <div className="schedule-activity__head">
-                <Text type="p" mono={false} bold={true} highlight={false}>{localeDate(props.activity.time)}</Text>
-                <Text type="h3" mono={false} bold={true} highlight={true}>{localeTime(props.activity.time)}</Text>
+                <Text type="p" mono={true} bold={true} highlight={false}>{localeDate(props.activity.time)}</Text>
+                <Text type="h3" mono={true} bold={true} highlight={true}>{localeTime(props.activity.time)}</Text>
             </div>
                 <IconButton onClick={() => props.onUpdate(ScheduleShift.SLEEP)} highlight={props.activity.shift === ScheduleShift.SLEEP}>bed</IconButton>
                 <IconButton onClick={() => props.onUpdate(ScheduleShift.BREAK)} highlight={props.activity.shift === ScheduleShift.BREAK}>coffee</IconButton>

@@ -1,0 +1,7 @@
+@use "../../../../styles/variables";
+
+.incident-detail {
+  padding: 2rem;
+
+  @include variables.layer-default();
+}

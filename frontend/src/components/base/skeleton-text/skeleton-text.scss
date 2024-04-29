@@ -1,0 +1,20 @@
+@use "../../../styles/variables";
+
+.skeleton-text {
+  position: relative;
+  width: fit-content;
+  background-color: variables.$layer-default;
+  color: transparent;
+  overflow: hidden;
+  animation: 2000ms skeleton-text infinite;
+}
+
+@keyframes skeleton-text {
+  0%, 100% {
+    background-color: variables.$layer-default;
+  }
+  50% {
+    background-color: variables.$layer-highlight;
+  }
+}
+

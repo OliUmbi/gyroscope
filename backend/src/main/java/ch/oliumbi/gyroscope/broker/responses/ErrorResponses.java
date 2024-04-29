@@ -1,4 +1,4 @@
-package ch.oliumbi.gyroscope.broker.dtos;
+package ch.oliumbi.gyroscope.broker.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorDTO {
+public class ErrorResponses {
     private String error;
 }

@@ -18,7 +18,7 @@ public class Broker implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/authentication", "/profile", "discussion", "incident", "/task", "/schedule");
+        config.enableSimpleBroker("/authentication", "/profile", "/discussion", "/incident", "/task", "/schedule");
     }
 
     @Override
