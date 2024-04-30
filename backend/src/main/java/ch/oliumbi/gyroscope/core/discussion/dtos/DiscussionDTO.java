@@ -15,6 +15,4 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DiscussionDTO extends MetaDTO {
     private UUID id;
-
-    private List<DiscussionCommentDTO> discussionCommentDTOs;
 }

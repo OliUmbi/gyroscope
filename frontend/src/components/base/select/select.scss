@@ -1,0 +1,12 @@
+@use "../../../styles/variables";
+
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+  }
+}

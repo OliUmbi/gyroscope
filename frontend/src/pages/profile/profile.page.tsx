@@ -1,6 +1,5 @@
 import Text from "../../components/base/text/text.tsx";
 import Linear from "../../components/layout/linear/linear.tsx";
-import Split from "../../components/layout/split/split.tsx";
 import Button from "../../components/base/button/button.tsx";
 import useSubscribe from "../../hooks/use-subscribe.ts";
 import {ProfileResponse} from "../../responses/profile.response.ts";
@@ -12,8 +11,8 @@ import SkeletonText from "../../components/base/skeleton-text/skeleton-text.tsx"
 
 const ProfilePage = () => {
 
-    const [profileResponse] = useSubscribe<ProfileResponse>("/profile/loadSessionId")
-    const [loadProfileSession] = usePublish("/load/profileSession")
+    const [profileResponse] = useSubscribe<ProfileResponse>("/profile/id")
+    const [loadProfileSession] = usePublish("/profile/id")
 
     useEffect(() => {
         loadProfileSession("")

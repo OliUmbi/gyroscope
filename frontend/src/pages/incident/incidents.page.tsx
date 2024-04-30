@@ -8,8 +8,8 @@ import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 
 const IncidentsPage = () => {
 
-    const [incidentResponses] = useSubscribe<IncidentResponse[]>("/incident/loadAll")
-    const [loadIncidents] = usePublish("/load/incidents")
+    const [incidentResponses] = useSubscribe<IncidentResponse[]>("/incident")
+    const [loadIncidents] = usePublish("/incident")
 
     useEffect(() => {
         loadIncidents("")

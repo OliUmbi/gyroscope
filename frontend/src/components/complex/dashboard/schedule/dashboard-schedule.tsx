@@ -16,7 +16,12 @@ const DashboardSchedule = (props: DashboardScheduleProps) => {
                 </div>
                 <div className="dashboard-schedule__body">
                     {
-                        props.profiles.map((profile, key) => <Text type="p" mono={false} bold={true} highlight={true} key={key}>{profile.name}</Text>)
+                        props.profiles.length !== 0 ? (
+                            props.profiles.map((profile, key) => <Text type="p" mono={false} bold={true} highlight={true} key={key}>{profile.name}</Text>)
+
+                        ) : (
+                            <Text type="p" mono={false} bold={true} highlight={false}>None</Text>
+                        )
                     }
                 </div>
             </div>

@@ -3,7 +3,7 @@ export interface InputProps {
     setValue: (value: string) => void,
     type: "text" | "password" | "email"
     label: string,
-    required: boolean
+    required: boolean,
     placeholder: string,
     message: string,
     rows?: number

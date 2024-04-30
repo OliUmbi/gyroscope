@@ -1,14 +1,14 @@
-import "./profile-timeline.scss";
+import "./schedule-timeline.scss";
 import Text from "../../../base/text/text.tsx";
 import {useRef} from "react";
 import IconButton from "../../../base/icon-button/icon-button.tsx";
 import Icon from "../../../base/icon/icon.tsx";
 import {localeTime} from "../../../../utils/locale.util.ts";
 import {ProfileScheduleShift} from "../../../../enums/profile-schedule-shift.enum.ts";
-import {ProfileTimelineProps} from "./profile-timeline.props.ts";
+import {ScheduleTimelineProps} from "./schedule-timeline.props.ts";
 import {dateConvert} from "../../../../utils/date.util.ts";
 
-const ProfileTimeline = (props: ProfileTimelineProps) => {
+const ScheduleTimeline = (props: ScheduleTimelineProps) => {
 
     const focus = useRef<HTMLDivElement | null>(null);
 
@@ -56,4 +56,4 @@ const ProfileTimeline = (props: ProfileTimelineProps) => {
     )
 }
 
-export default ProfileTimeline
+export default ScheduleTimeline

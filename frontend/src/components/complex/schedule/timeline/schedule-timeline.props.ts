@@ -1,5 +1,5 @@
 import {ProfileResponse} from "../../../../responses/profile.response.ts";
 
-export interface ProfileTimelineProps {
+export interface ScheduleTimelineProps {
     profileResponse: ProfileResponse
 }

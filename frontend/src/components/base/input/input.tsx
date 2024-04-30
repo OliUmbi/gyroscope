@@ -12,7 +12,7 @@ const Input = (props: InputProps) => {
 
     return (
         <label className="input">
-            <Text type="s" mono={true} bold={false} highlight={false}>{props.label}</Text>
+            <Text type="s" mono={true} bold={false} highlight={false}>{props.label} {props.required ? "[required]" : ""}</Text>
             {
                 props.rows === undefined ? (
                     <input className="input__body" type={props.type} value={props.value} onChange={handleOnChange}

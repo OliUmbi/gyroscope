@@ -1,5 +1,5 @@
 import {ProfileScheduleResponse} from "../../../../responses/profile-schedule.response.ts";
 
-export interface ProfileEditScheduleProps {
+export interface ScheduleEditItemProps {
     schedule: ProfileScheduleResponse
 }

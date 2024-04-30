@@ -1,16 +1,16 @@
-import "./profile-edit-schedule.scss";
+import "./schedule-edit-item.scss";
 import Text from "../../../base/text/text.tsx";
 import IconButton from "../../../base/icon-button/icon-button.tsx";
-import {ProfileEditScheduleProps} from "./profile-edit-schedule.props.ts";
+import {ScheduleEditItemProps} from "./schedule-edit-item.props.ts";
 import {ProfileScheduleShift} from "../../../../enums/profile-schedule-shift.enum.ts";
 import {localeDate, localeTime} from "../../../../utils/locale.util.ts";
 import {dateConvert} from "../../../../utils/date.util.ts";
 import usePublish from "../../../../hooks/use-publish.ts";
 import {ProfileUpdatedScheduleRequest} from "../../../../requests/profile-updated-schedule.request.ts";
 
-const ProfileEditSchedule = (props: ProfileEditScheduleProps) => {
+const ScheduleEditItem = (props: ScheduleEditItemProps) => {
 
-    const [updateProfileSchedule] = usePublish("/update/profileSchedule")
+    const [profileScheduleUpdate] = usePublish("/profile/schedule/update")
 
     const onClick = (shift: ProfileScheduleShift) => {
         const profileUpdatedScheduleRequest: ProfileUpdatedScheduleRequest = {
@@ -18,12 +18,12 @@ const ProfileEditSchedule = (props: ProfileEditScheduleProps) => {
             shift: shift
         }
 
-        updateProfileSchedule(profileUpdatedScheduleRequest)
+        profileScheduleUpdate(profileUpdatedScheduleRequest)
     }
 
     return (
-        <div className="profile-schedule">
-            <div className="profile-schedule__head">
+        <div className="schedule-edit-item">
+            <div className="schedule-edit-item__head">
                 <Text type="p" mono={true} bold={true} highlight={false}>{localeDate(dateConvert(props.schedule.time))}</Text>
                 <Text type="h3" mono={true} bold={true} highlight={true}>{localeTime(dateConvert(props.schedule.time))}</Text>
             </div>
@@ -35,4 +35,4 @@ const ProfileEditSchedule = (props: ProfileEditScheduleProps) => {
     )
 }
 
-export default ProfileEditSchedule
+export default ScheduleEditItem

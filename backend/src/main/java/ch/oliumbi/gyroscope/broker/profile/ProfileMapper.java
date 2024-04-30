@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProfileMapper {
@@ -22,112 +21,31 @@ public class ProfileMapper {
         this.profileService = profileService;
     }
 
-    public ProfileResponse load(UUID id) {
-        ProfileDTO profileDTO = profileService.load(id);
-
+    public ProfileResponse map(ProfileDTO profileDTO) {
         ProfileResponse profileResponse = new ProfileResponse();
         profileResponse.setId(profileDTO.getId());
         profileResponse.setName(profileDTO.getName());
+        profileResponse.setSchedule(new ArrayList<>());
+        profileResponse.setSessions(new ArrayList<>());
 
         return profileResponse;
     }
 
-    public ProfileResponse loadSession(UUID id) {
+    public ProfileSessionResponse mapSession(ProfileSessionDTO profileSessionDTO) {
+        ProfileSessionResponse profileSessionResponse = new ProfileSessionResponse();
+        profileSessionResponse.setId(profileSessionDTO.getId());
+        profileSessionResponse.setExpires(profileSessionDTO.getExpires());
+        profileSessionResponse.setCreated(profileSessionDTO.getCreated());
 
-        ProfileDTO profileDTO = profileService.loadSession(id);
-
-        ProfileResponse profileResponse = new ProfileResponse();
-        profileResponse.setId(profileDTO.getId());
-        profileResponse.setName(profileDTO.getName());
-
-        List<ProfileSessionResponse> sessions = new ArrayList<>();
-        for (ProfileSessionDTO profileSessionDTO : profileDTO.getProfileSessionDTOs()) {
-            ProfileSessionResponse session = new ProfileSessionResponse();
-            session.setId(profileSessionDTO.getId());
-            session.setExpires(profileSessionDTO.getExpires());
-            session.setCreated(profileSessionDTO.getCreated());
-
-            sessions.add(session);
-        }
-        profileResponse.setSessions(sessions);
-
-        return profileResponse;
+        return profileSessionResponse;
     }
 
-    public ProfileResponse loadSchedule(UUID id) {
+    public ProfileScheduleResponse mapSchedule(ProfileScheduleDTO profileScheduleDTO) {
+        ProfileScheduleResponse profileScheduleResponse = new ProfileScheduleResponse();
+        profileScheduleResponse.setId(profileScheduleDTO.getId());
+        profileScheduleResponse.setTime(profileScheduleDTO.getTime());
+        profileScheduleResponse.setShift(profileScheduleDTO.getProfileScheduleShift());
 
-        ProfileDTO profileDTO = profileService.loadSchedule(id);
-
-        ProfileResponse profileResponse = new ProfileResponse();
-        profileResponse.setId(profileDTO.getId());
-        profileResponse.setName(profileDTO.getName());
-
-        List<ProfileScheduleResponse> schedules = new ArrayList<>();
-        for (ProfileScheduleDTO profileScheduleDTO : profileDTO.getProfileScheduleDTOs()) {
-            ProfileScheduleResponse schedule = new ProfileScheduleResponse();
-            schedule.setId(profileScheduleDTO.getId());
-            schedule.setTime(profileScheduleDTO.getTime());
-            schedule.setShift(profileScheduleDTO.getProfileScheduleShift());
-
-            schedules.add(schedule);
-        }
-        profileResponse.setSchedule(schedules);
-
-        return profileResponse;
-    }
-
-    public List<ProfileResponse> loadSchedule() {
-
-        List<ProfileDTO> profileDTOs = profileService.loadSchedule();
-
-        List<ProfileResponse> profileResponses = new ArrayList<>();
-        for (ProfileDTO profileDTO : profileDTOs) {
-            ProfileResponse profileResponse = new ProfileResponse();
-            profileResponse.setId(profileDTO.getId());
-            profileResponse.setName(profileDTO.getName());
-
-            List<ProfileScheduleResponse> schedules = new ArrayList<>();
-            for (ProfileScheduleDTO profileScheduleDTO : profileDTO.getProfileScheduleDTOs()) {
-                ProfileScheduleResponse schedule = new ProfileScheduleResponse();
-                schedule.setId(profileScheduleDTO.getId());
-                schedule.setTime(profileScheduleDTO.getTime());
-                schedule.setShift(profileScheduleDTO.getProfileScheduleShift());
-
-                schedules.add(schedule);
-            }
-            profileResponse.setSchedule(schedules);
-
-            profileResponses.add(profileResponse);
-        }
-
-        return profileResponses;
-    }
-
-    public List<ProfileResponse> loadScheduleDashboard() {
-
-        List<ProfileDTO> profileDTOs = profileService.loadScheduleDashboard();
-
-        List<ProfileResponse> profileResponses = new ArrayList<>();
-        for (ProfileDTO profileDTO : profileDTOs) {
-            ProfileResponse profileResponse = new ProfileResponse();
-            profileResponse.setId(profileDTO.getId());
-            profileResponse.setName(profileDTO.getName());
-
-            List<ProfileScheduleResponse> schedules = new ArrayList<>();
-            for (ProfileScheduleDTO profileScheduleDTO : profileDTO.getProfileScheduleDTOs()) {
-                ProfileScheduleResponse schedule = new ProfileScheduleResponse();
-                schedule.setId(profileScheduleDTO.getId());
-                schedule.setTime(profileScheduleDTO.getTime());
-                schedule.setShift(profileScheduleDTO.getProfileScheduleShift());
-
-                schedules.add(schedule);
-            }
-            profileResponse.setSchedule(schedules);
-
-            profileResponses.add(profileResponse);
-        }
-
-        return profileResponses;
-
+        return profileScheduleResponse;
     }
 }

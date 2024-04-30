@@ -31,45 +31,12 @@ public class TaskMapper {
         this.discussionMapper = discussionMapper;
     }
 
-    public List<TaskResponse> load() {
-        List<TaskDTO> taskDTOs = taskService.load();
-
-        List<TaskResponse> taskResponses = new ArrayList<>();
-        for (TaskDTO taskDTO : taskDTOs) {
-            TaskResponse taskResponse = new TaskResponse();
-            taskResponse.setId(taskDTO.getId());
-            taskResponse.setTitle(taskDTO.getTitle());
-            taskResponse.setStatus(taskDTO.getTaskStatus());
-            taskResponse.setPriority(taskDTO.getTaskPriority());
-
-            ProfileResponse assignee = profileMapper.load(taskDTO.getAssigneeProfileId());
-            taskResponse.setAssignee(assignee);
-
-            taskResponses.add(taskResponse);
-        }
-
-        return taskResponses;
-    }
-
-    public TaskResponse load(UUID id) {
-
-        TaskDTO taskDTO = taskService.load(id);
-
+    public TaskResponse map(TaskDTO taskDTO) {
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(taskDTO.getId());
         taskResponse.setTitle(taskDTO.getTitle());
         taskResponse.setStatus(taskDTO.getTaskStatus());
         taskResponse.setPriority(taskDTO.getTaskPriority());
-
-        ProfileResponse creator = profileMapper.load(taskDTO.getCreatorProfileId());
-        taskResponse.setCreator(creator);
-
-        ProfileResponse assignee = profileMapper.load(taskDTO.getAssigneeProfileId());
-        taskResponse.setAssignee(assignee);
-
-        DiscussionResponse discussion = discussionMapper.load(taskDTO.getDiscussionId());
-        taskResponse.setDiscussion(discussion);
-
         taskResponse.setCreated(taskDTO.getCreated());
 
         return taskResponse;

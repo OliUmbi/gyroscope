@@ -1,20 +1,14 @@
 @use "../../../../styles/variables";
 
 .dashboard-incidents {
+  height: 100%;
+  padding: 2rem;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
 
-  &__item {
-    height: 100%;
-    padding: 2rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 1rem;
-
-    @include variables.layer-default();
-    @include variables.layer-default-hover();
-  }
+  @include variables.layer-default();
+  @include variables.layer-default-hover();
 }

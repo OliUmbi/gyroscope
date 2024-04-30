@@ -2,6 +2,7 @@ package ch.oliumbi.gyroscope.core.profile;
 
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileDTO;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileScheduleDTO;
+import ch.oliumbi.gyroscope.core.profile.dtos.ProfileSessionDTO;
 import ch.oliumbi.gyroscope.core.profile.enums.ProfileScheduleShift;
 import org.springframework.stereotype.Service;
 
@@ -18,49 +19,20 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public ProfileDTO load(String token) {
-        ProfileDTO profileDTO = profileRepository.load(token);
-        profileDTO.setProfileSessionDTOs(profileRepository.loadSession(profileDTO.getId()));
-
-        return profileDTO;
+    public List<ProfileDTO> load() {
+        return profileRepository.load();
     }
 
     public ProfileDTO load(UUID id) {
         return profileRepository.load(id);
     }
 
-    public ProfileDTO loadSession(UUID id) {
-        ProfileDTO profileDTO = profileRepository.load(id);
-        profileDTO.setProfileSessionDTOs(profileRepository.loadSession(id));
-
-        return profileDTO;
+    public List<ProfileSessionDTO> loadSessions(UUID profileId) {
+        return profileRepository.loadSession(profileId);
     }
 
-    public ProfileDTO loadSchedule(UUID id) {
-        ProfileDTO profileDTO = profileRepository.load(id);
-        profileDTO.setProfileScheduleDTOs(profileRepository.loadSchedule(profileDTO.getId()));
-
-        return profileDTO;
-    }
-
-    public List<ProfileDTO> loadSchedule() {
-        List<ProfileDTO> profileDTOs = profileRepository.load();
-
-        for (ProfileDTO profileDTO : profileDTOs) {
-            profileDTO.setProfileScheduleDTOs(profileRepository.loadScheduleTimeline(profileDTO.getId()));
-        }
-
-        return profileDTOs;
-    }
-
-    public List<ProfileDTO> loadScheduleDashboard() {
-        List<ProfileDTO> profileDTOs = profileRepository.load();
-
-        for (ProfileDTO profileDTO : profileDTOs) {
-            profileDTO.setProfileScheduleDTOs(profileRepository.loadScheduleDashboard(profileDTO.getId()));
-        }
-
-        return profileDTOs;
+    public List<ProfileScheduleDTO> loadSchedule(UUID profileId) {
+        return profileRepository.loadSchedule(profileId);
     }
 
     public UUID createSchedule(ProfileScheduleShift profileScheduleShift) {

@@ -1,17 +1,16 @@
-import ProfileEditSchedule from "../../components/complex/profile-edit/schedule/profile-edit-schedule.tsx";
+import ScheduleEditItem from "../../components/complex/schedule-edit/item/schedule-edit-item.tsx";
 import {useEffect} from "react";
 import Linear from "../../components/layout/linear/linear.tsx";
 import useSubscribe from "../../hooks/use-subscribe.ts";
 import {ProfileResponse} from "../../responses/profile.response.ts";
 import usePublish from "../../hooks/use-publish.ts";
-import {IdRequest} from "../../requests/id.request.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
-import ProfileEditShift from "../../components/complex/profile-edit/shift/profile-edit-shift.tsx";
+import ScheduleEditShift from "../../components/complex/schedule-edit/shift/schedule-edit-shift.tsx";
 
-const ProfileScheduleEditPage = () => {
+const ScheduleEditPage = () => {
 
-    const [profileResponse] = useSubscribe<ProfileResponse>("/profile/loadScheduleId")
-    const [loadProfileSchedule] = usePublish("/load/profileSchedule")
+    const [profileResponse] = useSubscribe<ProfileResponse>("/profile/schedule/id")
+    const [loadProfileSchedule] = usePublish("/profile/schedule/id")
 
     useEffect(() => {
         loadProfileSchedule("")
@@ -23,9 +22,9 @@ const ProfileScheduleEditPage = () => {
                 {
                     profileResponse ? (
                         <>
-                            <ProfileEditShift/>
+                            <ScheduleEditShift/>
                             {
-                                profileResponse.schedule.map((schedule, key) => <ProfileEditSchedule schedule={schedule} key={key}/>)
+                                profileResponse.schedule.map((schedule, key) => <ScheduleEditItem schedule={schedule} key={key}/>)
                             }
                         </>
                     ) : (
@@ -50,4 +49,4 @@ const ProfileScheduleEditPage = () => {
     )
 }
 
-export default ProfileScheduleEditPage;
+export default ScheduleEditPage;

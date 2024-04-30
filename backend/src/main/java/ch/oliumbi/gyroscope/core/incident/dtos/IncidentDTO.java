@@ -30,6 +30,4 @@ public class IncidentDTO extends MetaDTO {
     private IncidentStatus incidentStatus;
     private IncidentSeverity incidentSeverity;
     private IncidentType incidentType;
-
-    private List<IncidentCheckDTO> incidentCheckDTOs;
 }

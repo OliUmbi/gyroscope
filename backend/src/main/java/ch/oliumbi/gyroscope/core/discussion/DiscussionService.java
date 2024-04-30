@@ -4,6 +4,7 @@ import ch.oliumbi.gyroscope.core.discussion.dtos.DiscussionCommentDTO;
 import ch.oliumbi.gyroscope.core.discussion.dtos.DiscussionDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,10 +17,11 @@ public class DiscussionService {
     }
 
     public DiscussionDTO load(UUID id) {
-        DiscussionDTO discussionDTO = discussionRepository.load(id);
-        discussionDTO.setDiscussionCommentDTOs(discussionRepository.loadComment(id));
+        return discussionRepository.load(id);
+    }
 
-        return discussionDTO;
+    public List<DiscussionCommentDTO> loadComment(UUID discussionId) {
+        return discussionRepository.loadComment(discussionId);
     }
 
     public UUID create() {

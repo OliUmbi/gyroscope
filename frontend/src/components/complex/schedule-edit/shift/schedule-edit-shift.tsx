@@ -1,25 +1,25 @@
-import "./profile-edit-shift.scss";
+import "./schedule-edit-shift.scss";
 import IconButton from "../../../base/icon-button/icon-button.tsx";
 import {ProfileScheduleShift} from "../../../../enums/profile-schedule-shift.enum.ts";
 import Text from "../../../base/text/text.tsx";
 import usePublish from "../../../../hooks/use-publish.ts";
 import {ProfileCreateScheduleRequest} from "../../../../requests/profile-create-schedule.request.ts";
 
-const ProfileEditShift = () => {
+const ScheduleEditShift = () => {
 
-    const [updateProfileSchedule] = usePublish("/create/profileSchedule")
+    const [profileScheduleCreate] = usePublish("/profile/schedule/create")
 
     const onClick = (shift: ProfileScheduleShift) => {
         const profileCreateScheduleRequest: ProfileCreateScheduleRequest = {
             shift: shift
         }
 
-        updateProfileSchedule(profileCreateScheduleRequest)
+        profileScheduleCreate(profileCreateScheduleRequest)
     }
 
     return (
-        <div className="profile-edit-shift">
-            <div className="profile-schedule__head">
+        <div className="schedule-edit-shift">
+            <div className="schedule-edit-shift__head">
                 <Text type="h3" mono={true} bold={true} highlight={true}>Next</Text>
             </div>
             <IconButton onClick={() => onClick(ProfileScheduleShift.SLEEP)} highlight={false}>bed</IconButton>
@@ -30,4 +30,4 @@ const ProfileEditShift = () => {
     )
 }
 
-export default ProfileEditShift
+export default ScheduleEditShift

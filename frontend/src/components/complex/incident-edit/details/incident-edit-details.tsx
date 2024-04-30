@@ -7,47 +7,12 @@ const IncidentEditDetails = () => {
 
     return (
         <div className="incident-edit-details">
-            <Input value="" setValue={value => console.log(value)} type="text" label="Title" required={true} placeholder="Suspicious activity on service XYZ" message=""/>
-            <Input value="" setValue={value => console.log(value)} type="text" label="Time" required={true} placeholder="2024.05.05 15:15" message=""/>
-            <Input value="" setValue={value => console.log(value)} type="text" label="System" required={true} placeholder="Service XYZ" message=""/>
 
             <div className="incident-edit-details__group">
-                <Text type="s" mono={true} bold={false} highlight={false}>Type</Text>
-                <div className="incident-edit-details__options">
-                    <Button onClick={() => {
-                    }} highlight={false}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>Suspicion</Text>
-                    </Button>
-                    <Button onClick={() => {
-                    }} highlight={false}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>Attempt</Text>
-                    </Button>
-                    <Button onClick={() => {
-                    }} highlight={true}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>Attack</Text>
-                    </Button>
-                </div>
+
             </div>
             <div className="incident-edit-details__group">
-                <Text type="s" mono={true} bold={false} highlight={false}>Severity</Text>
-                <div className="incident-edit-details__options">
-                    <Button onClick={() => {
-                    }} highlight={false}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>Critical</Text>
-                    </Button>
-                    <Button onClick={() => {
-                    }} highlight={true}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>High</Text>
-                    </Button>
-                    <Button onClick={() => {
-                    }} highlight={false}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>Medium</Text>
-                    </Button>
-                    <Button onClick={() => {
-                    }} highlight={false}>
-                        <Text type="p" mono={false} bold={true} highlight={true}>Low</Text>
-                    </Button>
-                </div>
+
             </div>
             <div className="incident-edit-details__group">
                 <Text type="s" mono={true} bold={false} highlight={false}>Status</Text>

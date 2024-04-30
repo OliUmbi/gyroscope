@@ -11,8 +11,8 @@ import IncidentsPage from "./pages/incident/incidents.page.tsx";
 import IncidentPage from "./pages/incident/incident.page.tsx";
 import TasksPage from "./pages/task/tasks.page.tsx";
 import TaskPage from "./pages/task/task.page.tsx";
-import ProfileSchedulePage from "./pages/profile/profile-schedule.page.tsx";
-import ProfileScheduleEditPage from "./pages/profile/profile-schedule-edit.page.tsx";
+import SchedulePage from "./pages/schedule/schedule.page.tsx";
+import ScheduleEditPage from "./pages/schedule/schedule-edit.page.tsx";
 import IncidentEditPage from "./pages/incident/incident-edit.page.tsx";
 import TaskEditPage from "./pages/task/task-edit.page.tsx";
 import {useEffect, useRef} from "react";
@@ -97,7 +97,7 @@ const App = () => {
         {
             title: "Schedule",
             path: "/schedule",
-            element: <ProfileSchedulePage/>,
+            element: <SchedulePage/>,
             actions: [
                 {
                     name: "Edit",
@@ -108,7 +108,7 @@ const App = () => {
         {
             title: "Schedule",
             path: "/schedule/edit",
-            element: <ProfileScheduleEditPage/>,
+            element: <ScheduleEditPage/>,
             actions: []
         },
         {

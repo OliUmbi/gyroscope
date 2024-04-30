@@ -18,12 +18,10 @@ public class TaskService {
     }
 
     public List<TaskDTO> load() {
-
         return taskRepository.load();
     }
 
     public TaskDTO load(UUID id) {
-
         return taskRepository.load(id);
     }
 

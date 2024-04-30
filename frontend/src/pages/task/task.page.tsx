@@ -17,8 +17,8 @@ import {TaskResponse} from "../../responses/task.response.ts";
 const TaskPage = () => {
 
     let {id} = useParams();
-    const [taskResponse] = useSubscribe<TaskResponse>("/task/loadId")
-    const [loadTask] = usePublish("/load/task")
+    const [taskResponse] = useSubscribe<TaskResponse>("/task/id")
+    const [loadTask] = usePublish("/task/id")
 
     useEffect(() => {
         if (id) {
@@ -68,14 +68,14 @@ const TaskPage = () => {
                     </Split>
                     <Split>
                         {
-                            taskResponse ? (
+                            taskResponse?.assignee ? (
                                 <TaskDetail name="Assignee" value={taskResponse.assignee.name}/>
                             ) : (
                                 <Skeleton height={8}/>
                             )
                         }
                         {
-                            taskResponse ? (
+                            taskResponse?.creator ? (
                                 <TaskDetail name="Creator" value={taskResponse.creator.name}/>
                             ) : (
                                 <Skeleton height={8}/>
@@ -86,7 +86,7 @@ const TaskPage = () => {
             </Linear>
             <Linear>
                 {
-                    taskResponse ? (
+                    taskResponse?.discussion ? (
                         <Discussion discussion={taskResponse.discussion}/>
                     ) : (
                         <Skeleton height={32}/>

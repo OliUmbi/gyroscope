@@ -21,20 +21,15 @@ public class IncidentService {
     }
 
     public List<IncidentDTO> load() {
-        List<IncidentDTO> incidentDTOs = incidentRepository.load();
-
-        for (IncidentDTO incidentDTO : incidentDTOs) {
-            incidentDTO.setIncidentCheckDTOs(incidentRepository.loadCheck(incidentDTO.getId()));
-        }
-
-        return incidentDTOs;
+        return incidentRepository.load();
     }
 
     public IncidentDTO load(UUID id) {
-        IncidentDTO incidentDTO = incidentRepository.load(id);
-        incidentDTO.setIncidentCheckDTOs(incidentRepository.loadCheck(incidentDTO.getId()));
+        return incidentRepository.load(id);
+    }
 
-        return incidentDTO;
+    public List<IncidentCheckDTO> loadChecks(UUID incidentId) {
+        return incidentRepository.loadCheck(incidentId);
     }
 
     public UUID create(UUID creatorProfileId, UUID assigneeProfileId, UUID discussionId, String title, String system, LocalDateTime time, IncidentStatus incidentStatus, IncidentSeverity incidentSeverity, IncidentType incidentType) {

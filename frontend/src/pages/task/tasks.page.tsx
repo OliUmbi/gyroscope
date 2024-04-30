@@ -1,7 +1,7 @@
 import TaskBoard from "../../components/complex/task/board/task-board.tsx";
 import useSubscribe from "../../hooks/use-subscribe.ts";
 import usePublish from "../../hooks/use-publish.ts";
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import {TaskResponse} from "../../responses/task.response.ts";
 import TaskColumn from "../../components/complex/task/column/task-column.tsx";
 import {TaskStatus} from "../../enums/task-status.enum.ts";
@@ -10,8 +10,8 @@ import TaskSummary from "../../components/complex/task/summary/task-summary.tsx"
 
 const TasksPage = () => {
 
-    const [taskResponses] = useSubscribe<TaskResponse[]>("/task/loadAll")
-    const [loadTasks] = usePublish("/load/tasks")
+    const [taskResponses] = useSubscribe<TaskResponse[]>("/task")
+    const [loadTasks] = usePublish("/task")
 
     useEffect(() => {
         loadTasks("")

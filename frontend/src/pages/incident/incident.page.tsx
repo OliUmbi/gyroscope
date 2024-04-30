@@ -18,8 +18,8 @@ import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 const IncidentPage = () => {
 
     let {id} = useParams();
-    const [incidentResponse] = useSubscribe<IncidentResponse>("/incident/loadId")
-    const [loadIncident] = usePublish("/load/incident")
+    const [incidentResponse] = useSubscribe<IncidentResponse>("/incident/id")
+    const [loadIncident] = usePublish("/incident/id")
 
     useEffect(() => {
         if (id) {
@@ -53,7 +53,7 @@ const IncidentPage = () => {
                 <Split>
                     <Split>
                         {
-                            incidentResponse ? (
+                            incidentResponse?.assignee && incidentResponse?.creator ? (
                                 <>
                                     <IncidentDetail name="Status" value={incidentResponse.status}/>
                                     <IncidentDetail name="Severity" value={incidentResponse.severity}/>
@@ -80,7 +80,7 @@ const IncidentPage = () => {
                     </Split>
                     <Linear>
                         {
-                            incidentResponse ? (
+                            incidentResponse?.checks ? (
                                 incidentResponse.checks.map((check, key) => <IncidentCheck check={check} key={key}/>)
                             ) : (
                                 <>
@@ -98,7 +98,7 @@ const IncidentPage = () => {
             </Linear>
             <Linear>
                 {
-                    incidentResponse ? (
+                    incidentResponse?.discussion ? (
                         <Discussion discussion={incidentResponse.discussion}/>
                     ) : (
                         <Skeleton height={32}/>

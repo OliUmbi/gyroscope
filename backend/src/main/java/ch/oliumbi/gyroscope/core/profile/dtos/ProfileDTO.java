@@ -17,7 +17,4 @@ public class ProfileDTO extends MetaDTO {
     private UUID id;
     private String name;
     private String password;
-
-    private List<ProfileSessionDTO> profileSessionDTOs;
-    private List<ProfileScheduleDTO> profileScheduleDTOs;
 }
