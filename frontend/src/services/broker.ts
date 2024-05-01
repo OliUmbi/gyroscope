@@ -6,7 +6,7 @@ let token: string | null = null
 export const broker = {
     connection(callback: (stomp: Client) => void): void {
         if (client === null) {
-            client = new Client({brokerURL: "ws://localhost:8081/broker"})
+            client = new Client({brokerURL: "ws://localhost:8081/broker", connectHeaders: {name: "yeet", password: "test"}})
         }
 
         if (!client.active) {

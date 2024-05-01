@@ -9,7 +9,6 @@ const IncidentSummary = (props: IncidentSummaryProps) => {
 
     return (
         <Link to={"/incidents/" + props.incidentResponse.id}>
-
             <div className="incident-summary">
                 <div>
                     <Text type="s" mono={true} bold={false} highlight={false}>{locale(dateConvert(props.incidentResponse.time))}</Text>

@@ -24,6 +24,13 @@ const SchedulePage = () => {
                     ) : (
                         <>
                             <Skeleton height={6}/>
+                            <Skeleton height={6}/>
+                            <Skeleton height={6}/>
+                            <Skeleton height={6}/>
+                            <Skeleton height={6}/>
+                            <Skeleton height={6}/>
+                            <Skeleton height={6}/>
+                            <Skeleton height={6}/>
                         </>
                     )
                 }

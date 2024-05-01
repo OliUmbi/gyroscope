@@ -9,6 +9,9 @@ import ch.oliumbi.gyroscope.core.profile.dtos.ProfileScheduleDTO;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileSessionDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -26,9 +29,12 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @Secured("USER")
     @MessageMapping("/profile")
     @SendTo("/profile")
     public List<ProfileResponse> load() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         List<ProfileDTO> profileDTOs = profileService.load();
 
         List<ProfileResponse> profileResponses = new ArrayList<>();

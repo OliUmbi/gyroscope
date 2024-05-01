@@ -97,8 +97,8 @@ const TaskEditPage = () => {
                     )
                 }
                 <Linear>
-                    <Text type="p" mono={false} bold={false} highlight={true}>Tasks are usually assigned by the assignee themselves</Text>
-                    <Text type="p" mono={false} bold={false} highlight={false}>Exceptions are Team leader and monitoring</Text>
+                    <Text type="p" mono={false} bold={false} highlight={true}>The assignee is responsible for completing the task and communicating updates</Text>
+                    <Text type="p" mono={false} bold={false} highlight={false}>Tasks are usually assigned by the assignee themselves, exceptions are team leader and monitoring</Text>
                 </Linear>
             </Split>
             <Button onClick={() => {}} highlight={false}>

@@ -23,10 +23,12 @@ const IncidentsPage = () => {
                         incidentResponses.map((incidentResponses, key) => <IncidentSummary incidentResponse={incidentResponses} key={key}/>)
                     ) : (
                         <>
-                            <Skeleton height={32}/>
-                            <Skeleton height={32}/>
-                            <Skeleton height={32}/>
-                            <Skeleton height={32}/>
+                            <Skeleton height={24}/>
+                            <Skeleton height={24}/>
+                            <Skeleton height={24}/>
+                            <Skeleton height={24}/>
+                            <Skeleton height={24}/>
+                            <Skeleton height={24}/>
                         </>
                     )
                 }
