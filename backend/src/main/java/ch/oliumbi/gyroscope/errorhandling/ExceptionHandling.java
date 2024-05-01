@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ch.oliumbi.gyroscope.broker.responses.ErrorResponses;
+import ch.oliumbi.gyroscope.endpoints.responses.ErrorResponses;
 
 @ControllerAdvice
 public class ExceptionHandling {

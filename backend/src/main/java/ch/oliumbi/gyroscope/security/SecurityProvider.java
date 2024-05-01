@@ -1,5 +1,6 @@
 package ch.oliumbi.gyroscope.security;
 
+import ch.oliumbi.gyroscope.core.profile.ProfileService;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileDTO;
 import ch.oliumbi.gyroscope.errorhandling.NotFoundException;
 import ch.oliumbi.gyroscope.errorhandling.UnauthorizedException;
@@ -11,15 +12,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityProvider implements AuthenticationProvider {
 
+    private final ProfileService profileService;
+
+    public SecurityProvider(ProfileService profileService) {
+        this.profileService = profileService;
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String token = (String) authentication.getCredentials();
+        ProfileDTO profileDTO = profileService.load(token);
 
-        try {
-            return new SecurityToken(token, new ProfileDTO());
-        } catch (NotFoundException ignored) {
-            throw new UnauthorizedException("profile not found");
-        }
+        return new SecurityToken(token, profileDTO);
     }
 
     @Override

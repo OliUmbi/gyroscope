@@ -14,15 +14,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 public class SecurityFilter extends OncePerRequestFilter {
+
+    private final SecurityProperties securityProperties;
     private final AuthenticationManager authenticationManager;
 
-    public SecurityFilter(AuthenticationManager authenticationManager) {
+    public SecurityFilter(SecurityProperties securityProperties, AuthenticationManager authenticationManager) {
+        this.securityProperties = securityProperties;
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader("name");
+        String token = request.getHeader(securityProperties.getHeader());
 
         if (!ObjectUtils.isEmpty(token)) {
             SecurityContext securityContext = SecurityContextHolder.getContext();

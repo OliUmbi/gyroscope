@@ -4,13 +4,15 @@ import ch.oliumbi.gyroscope.core.profile.dtos.ProfileDTO;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import java.util.Collections;
+
 public class SecurityToken extends AbstractAuthenticationToken {
 
     private final String token;
     private final ProfileDTO profileDTO;
 
     public SecurityToken(String token, ProfileDTO profileDTO) {
-        super(AuthorityUtils.createAuthorityList("LOGGED_IN"));
+        super(Collections.singletonList(new SecurityAuthority()));
         this.token = token;
         this.profileDTO = profileDTO;
         setAuthenticated(true);

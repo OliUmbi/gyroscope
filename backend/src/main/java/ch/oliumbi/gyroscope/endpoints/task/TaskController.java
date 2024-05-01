@@ -1,0 +1,99 @@
+package ch.oliumbi.gyroscope.endpoints.task;
+
+import ch.oliumbi.gyroscope.endpoints.discussion.DiscussionMapper;
+import ch.oliumbi.gyroscope.endpoints.discussion.responses.DiscussionCommentResponse;
+import ch.oliumbi.gyroscope.endpoints.discussion.responses.DiscussionResponse;
+import ch.oliumbi.gyroscope.endpoints.profile.ProfileMapper;
+import ch.oliumbi.gyroscope.endpoints.profile.responses.ProfileResponse;
+import ch.oliumbi.gyroscope.endpoints.task.responses.TaskResponse;
+import ch.oliumbi.gyroscope.core.discussion.DiscussionService;
+import ch.oliumbi.gyroscope.core.discussion.dtos.DiscussionCommentDTO;
+import ch.oliumbi.gyroscope.core.discussion.dtos.DiscussionDTO;
+import ch.oliumbi.gyroscope.core.profile.ProfileService;
+import ch.oliumbi.gyroscope.core.profile.dtos.ProfileDTO;
+import ch.oliumbi.gyroscope.core.task.TaskService;
+import ch.oliumbi.gyroscope.core.task.dtos.TaskDTO;
+import ch.oliumbi.gyroscope.security.SecurityAuthority;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Tag(name = "Task")
+@RequestMapping("/task")
+@RestController
+public class TaskController {
+
+    private final TaskService taskService;
+    private final TaskMapper taskMapper;
+    private final ProfileService profileService;
+    private final DiscussionService discussionService;
+    private final ProfileMapper profileMapper;
+    private final DiscussionMapper discussionMapper;
+
+    public TaskController(TaskService taskService, TaskMapper taskMapper, ProfileService profileService, DiscussionService discussionService, ProfileMapper profileMapper, DiscussionMapper discussionMapper) {
+        this.taskService = taskService;
+        this.taskMapper = taskMapper;
+        this.profileService = profileService;
+        this.discussionService = discussionService;
+        this.profileMapper = profileMapper;
+        this.discussionMapper = discussionMapper;
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @GetMapping("/")
+    public List<TaskResponse> load() {
+        List<TaskDTO> taskDTOs = taskService.load();
+
+        List<TaskResponse> taskResponses = new ArrayList<>();
+        for (TaskDTO taskDTO : taskDTOs) {
+            TaskResponse taskResponse = taskMapper.map(taskDTO);
+
+            ProfileDTO assigneeProfileDTO = profileService.load(taskDTO.getAssigneeProfileId());
+            ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
+            taskResponse.setAssignee(assigneeProfileResponse);
+
+            taskResponses.add(taskResponse);
+        }
+
+        return taskResponses;
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @GetMapping("/{id}")
+    public TaskResponse load(@PathVariable("id") UUID id) {
+        TaskDTO taskDTO = taskService.load(id);
+        TaskResponse taskResponse = taskMapper.map(taskDTO);
+
+        ProfileDTO creatorProfileDTO = profileService.load(taskDTO.getCreatorProfileId());
+        ProfileResponse creatorProfileResponse = profileMapper.map(creatorProfileDTO);
+        taskResponse.setCreator(creatorProfileResponse);
+
+        ProfileDTO assigneeProfileDTO = profileService.load(taskDTO.getAssigneeProfileId());
+        ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
+        taskResponse.setAssignee(assigneeProfileResponse);
+
+        DiscussionDTO discussionDTO = discussionService.load(taskDTO.getDiscussionId());
+        DiscussionResponse discussionResponse = discussionMapper.map(discussionDTO);
+
+        List<DiscussionCommentDTO> discussionCommentDTOs = discussionService.loadComment(taskDTO.getDiscussionId());
+        for (DiscussionCommentDTO discussionCommentDTO : discussionCommentDTOs) {
+            DiscussionCommentResponse discussionCommentResponse = discussionMapper.mapComment(discussionCommentDTO);
+
+            ProfileDTO profileDTO = profileService.load(discussionCommentDTO.getProfileId());
+            discussionCommentResponse.setProfile(profileMapper.map(profileDTO));
+
+            discussionResponse.getComments().add(discussionCommentResponse);
+        }
+
+        taskResponse.setDiscussion(discussionResponse);
+
+        return taskResponse;
+    }
+}

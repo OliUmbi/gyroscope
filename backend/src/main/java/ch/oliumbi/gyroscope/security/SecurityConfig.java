@@ -2,8 +2,6 @@ package ch.oliumbi.gyroscope.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -21,26 +18,28 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableWebSocketSecurity
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = false)
 public class SecurityConfig {
 
+    private final SecurityProperties securityProperties;
     private final SecurityProvider securityProvider;
 
-    public SecurityConfig(SecurityProvider securityProvider) {
+    public SecurityConfig(SecurityProperties securityProperties, SecurityProvider securityProvider) {
+        this.securityProperties = securityProperties;
         this.securityProvider = securityProvider;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception {
         httpSecurity
-                .addFilterBefore(new SecurityFilter(authenticationManager), AuthorizationFilter.class)
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers("/broker").permitAll()
-                                .anyRequest().authenticated()
+                .addFilterBefore(new SecurityFilter(securityProperties, authenticationManager), AuthorizationFilter.class)
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(securityProperties.getExcluded()).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
@@ -54,10 +53,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+        configuration.setAllowedOrigins(List.of(securityProperties.getOrigins()));
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList(securityProperties.getHeader(), "Cache-Control", "Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -71,16 +70,5 @@ public class SecurityConfig {
         authenticationManagerBuilder.authenticationProvider(securityProvider);
 
         return authenticationManagerBuilder.build();
-    }
-
-    @Bean
-    AuthorizationManager<Message<?>> messageAuthorizationManager(MessageMatcherDelegatingAuthorizationManager.Builder messages) {
-        messages
-                .simpTypeMatchers(SimpMessageType.CONNECT, SimpMessageType.HEARTBEAT, SimpMessageType.UNSUBSCRIBE, SimpMessageType.DISCONNECT)
-                .permitAll()
-                .anyMessage().authenticated()
-                .simpDestMatchers("/**").authenticated();
-
-        return messages.build();
     }
 }

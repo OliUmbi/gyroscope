@@ -27,6 +27,10 @@ public class ProfileService {
         return profileRepository.load(id);
     }
 
+    public ProfileDTO load(String token) {
+        return profileRepository.load(token);
+    }
+
     public List<ProfileSessionDTO> loadSessions(UUID profileId) {
         return profileRepository.loadSession(profileId);
     }
