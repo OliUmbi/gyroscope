@@ -26,6 +26,7 @@ public class TaskMapper {
         taskResponse.setTitle(taskDTO.getTitle());
         taskResponse.setStatus(taskDTO.getTaskStatus());
         taskResponse.setPriority(taskDTO.getTaskPriority());
+        taskResponse.setDiscussionId(taskDTO.getDiscussionId());
         taskResponse.setCreated(taskDTO.getCreated());
 
         return taskResponse;

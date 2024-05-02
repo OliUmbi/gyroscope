@@ -34,11 +34,35 @@ import java.util.UUID;
 @RestController
 public class DiscussionController {
 
-
     private final DiscussionService discussionService;
+    private final ProfileService profileService;
+    private final ProfileMapper profileMapper;
+    private final DiscussionMapper discussionMapper;
 
-    public DiscussionController(DiscussionService discussionService) {
+    public DiscussionController(DiscussionService discussionService, ProfileService profileService, ProfileMapper profileMapper, DiscussionMapper discussionMapper) {
         this.discussionService = discussionService;
+        this.profileService = profileService;
+        this.profileMapper = profileMapper;
+        this.discussionMapper = discussionMapper;
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @GetMapping("/{id}")
+    public DiscussionResponse load(@PathVariable("id") UUID id) {
+        DiscussionDTO discussionDTO = discussionService.load(id);
+        DiscussionResponse discussionResponse = discussionMapper.map(discussionDTO);
+
+        List<DiscussionCommentDTO> discussionCommentDTOs = discussionService.loadComment(id);
+        for (DiscussionCommentDTO discussionCommentDTO : discussionCommentDTOs) {
+            DiscussionCommentResponse discussionCommentResponse = discussionMapper.mapComment(discussionCommentDTO);
+
+            ProfileDTO profileDTO = profileService.load(discussionCommentDTO.getProfileId());
+            discussionCommentResponse.setProfile(profileMapper.map(profileDTO));
+
+            discussionResponse.getComments().add(discussionCommentResponse);
+        }
+
+        return discussionResponse;
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)

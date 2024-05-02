@@ -23,6 +23,6 @@ public class TaskResponse {
     private TaskPriority priority;
     private ProfileResponse creator;
     private ProfileResponse assignee;
-    private DiscussionResponse discussion;
+    private UUID discussionId;
     private LocalDateTime created;
 }

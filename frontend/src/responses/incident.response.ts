@@ -16,7 +16,7 @@ export interface IncidentResponse {
     checks: IncidentCheckResponse[],
     creator: ProfileResponse,
     assignee: ProfileResponse,
-    discussion: DiscussionResponse,
+    discussionId: string,
     created: string,
     updated: string
 }

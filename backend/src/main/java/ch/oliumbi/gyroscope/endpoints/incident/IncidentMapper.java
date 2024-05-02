@@ -21,6 +21,7 @@ public class IncidentMapper {
         incidentResponse.setSeverity(incidentDTO.getIncidentSeverity());
         incidentResponse.setType(incidentDTO.getIncidentType());
         incidentResponse.setChecks(new ArrayList<>());
+        incidentResponse.setDiscussionId(incidentDTO.getDiscussionId());
         incidentResponse.setCreated(incidentDTO.getCreated());
         incidentResponse.setUpdated(incidentDTO.getUpdated());
 

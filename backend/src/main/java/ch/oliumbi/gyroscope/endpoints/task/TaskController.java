@@ -82,21 +82,6 @@ public class TaskController {
             taskResponse.setAssignee(assigneeProfileResponse);
         }
 
-        DiscussionDTO discussionDTO = discussionService.load(taskDTO.getDiscussionId());
-        DiscussionResponse discussionResponse = discussionMapper.map(discussionDTO);
-
-        List<DiscussionCommentDTO> discussionCommentDTOs = discussionService.loadComment(taskDTO.getDiscussionId());
-        for (DiscussionCommentDTO discussionCommentDTO : discussionCommentDTOs) {
-            DiscussionCommentResponse discussionCommentResponse = discussionMapper.mapComment(discussionCommentDTO);
-
-            ProfileDTO profileDTO = profileService.load(discussionCommentDTO.getProfileId());
-            discussionCommentResponse.setProfile(profileMapper.map(profileDTO));
-
-            discussionResponse.getComments().add(discussionCommentResponse);
-        }
-
-        taskResponse.setDiscussion(discussionResponse);
-
         return taskResponse;
     }
 

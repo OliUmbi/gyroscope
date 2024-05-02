@@ -29,7 +29,7 @@ public class IncidentResponse {
     private List<IncidentCheckResponse> checks;
     private ProfileResponse creator;
     private ProfileResponse assignee;
-    private DiscussionResponse discussion;
+    private UUID discussionId;
     private LocalDateTime created;
     private LocalDateTime updated;
 }

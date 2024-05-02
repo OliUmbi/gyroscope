@@ -80,10 +80,9 @@ public class IncidentService {
         incidentRepository.update(incidentDTO);
     }
 
-    public void updateCheck(UUID id, UUID incidentId, String value, Boolean checked) {
+    public void updateCheck(UUID id, String value, Boolean checked) {
         IncidentCheckDTO incidentCheckDTO = new IncidentCheckDTO();
         incidentCheckDTO.setId(id);
-        incidentCheckDTO.setIncidentId(incidentId);
         incidentCheckDTO.setValue(value);
         incidentCheckDTO.setChecked(checked);
 

@@ -86,21 +86,6 @@ public class IncidentController {
             incidentResponse.setAssignee(assigneeProfileResponse);
         }
 
-        DiscussionDTO discussionDTO = discussionService.load(incidentDTO.getDiscussionId());
-        DiscussionResponse discussionResponse = discussionMapper.map(discussionDTO);
-
-        List<DiscussionCommentDTO> discussionCommentDTOs = discussionService.loadComment(incidentDTO.getDiscussionId());
-        for (DiscussionCommentDTO discussionCommentDTO : discussionCommentDTOs) {
-            DiscussionCommentResponse discussionCommentResponse = discussionMapper.mapComment(discussionCommentDTO);
-
-            ProfileDTO profileDTO = profileService.load(discussionCommentDTO.getProfileId());
-            discussionCommentResponse.setProfile(profileMapper.map(profileDTO));
-
-            discussionResponse.getComments().add(discussionCommentResponse);
-        }
-
-        incidentResponse.setDiscussion(discussionResponse);
-
         return incidentResponse;
     }
 
@@ -128,6 +113,14 @@ public class IncidentController {
         }
 
         return new MessageResponse("Successfully updated incident");
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @PutMapping("/check/{id}")
+    public MessageResponse updateCheck(@PathVariable("id") UUID id, @RequestBody IncidentCheckRequest incidentCheckRequest) {
+        incidentService.updateCheck(id, incidentCheckRequest.getValue(), incidentCheckRequest.getChecked());
+
+        return new MessageResponse("Successfully updated incident check");
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)

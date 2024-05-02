@@ -25,6 +25,10 @@ const IncidentPage = () => {
         }
     }, [id]);
 
+    const reload = () => {
+        incident("incident/" + id, Method.GET)
+    }
+
     return (
         <>
             <Linear>
@@ -75,7 +79,7 @@ const IncidentPage = () => {
                     <Linear>
                         {
                             incidentData ? (
-                                incidentData.checks.map((check, key) => <IncidentCheck check={check} key={key}/>)
+                                incidentData.checks.map((check, key) => <IncidentCheck check={check} reload={reload} key={key}/>)
                             ) : (
                                 <>
                                     <Skeleton height={3.75}/>
@@ -93,7 +97,7 @@ const IncidentPage = () => {
             <Linear>
                 {
                     incidentData ? (
-                        <Discussion discussion={incidentData.discussion}/>
+                        <Discussion id={incidentData.discussionId}/>
                     ) : (
                         <Skeleton height={32}/>
                     )

@@ -35,7 +35,7 @@ public class IncidentRepository {
                                         updated
                                 FROM    incident
                                 WHERE   deleted = FALSE
-                                ORDER BY time
+                                ORDER BY time DESC
                                 INTO    id,
                                         creatorProfileId,
                                         assigneeProfileId,
@@ -99,7 +99,7 @@ public class IncidentRepository {
                                 FROM    incident_check
                                 WHERE   deleted = FALSE
                                 AND     incident_id = :incidentId
-                                ORDER BY created
+                                ORDER BY created, value
                                 INTO    id,
                                         incidentId,
                                         value,
@@ -179,8 +179,7 @@ public class IncidentRepository {
     public void updateCheck(IncidentCheckDTO incidentCheckDTO) {
         database.update("""
                                 UPDATE  incident_check
-                                SET     incident_id = :incidentId,
-                                        value = :value,
+                                SET     value = :value,
                                         checked = :checked
                                 WHERE   id = :id
                                 AND     deleted = FALSE

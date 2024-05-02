@@ -9,8 +9,12 @@ import ProfileSession from "../../components/complex/profile/session/profile-ses
 import SkeletonText from "../../components/base/skeleton-text/skeleton-text.tsx";
 import useStorage from "../../hooks/use-storage.ts";
 import {Method} from "../../enums/method.enum.ts";
+import {storage} from "../../services/storage.ts";
+import {useNavigate} from "react-router-dom";
 
 const ProfilePage = () => {
+
+    const navigate = useNavigate()
 
     const [profileId] = useStorage("profileId")
     const [profile, profileData] = useApi<ProfileResponse>()
@@ -21,6 +25,13 @@ const ProfilePage = () => {
         }
     }, []);
 
+    const logout = () => {
+        storage.remove("profileId")
+        storage.remove("token")
+        storage.remove("expires")
+        navigate("/login")
+    }
+
     return (
         <>
             <Linear>
@@ -30,7 +41,7 @@ const ProfilePage = () => {
                         <Text type="h2" mono={false} bold={true} highlight={true}>{profileData.name}</Text> : <SkeletonText type="h2"/>
                 }
                 <Text type="s" mono={true} bold={false} highlight={false}>Actions</Text>
-                <Button onClick={() => {}} highlight={false}>
+                <Button onClick={logout} highlight={false}>
                     <Text type="p" mono={false} bold={true} highlight={true}>Logout</Text>
                 </Button>
                 <Text type="s" mono={true} bold={false} highlight={false}>Sessions</Text>

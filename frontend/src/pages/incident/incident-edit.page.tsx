@@ -19,6 +19,7 @@ import {dateConvert, dateParse, dateValid} from "../../utils/date.util.ts";
 import {locale} from "../../utils/locale.util.ts";
 import {IncidentCheckRequest} from "../../requests/incident-check.request.ts";
 import IconButton from "../../components/base/icon-button/icon-button.tsx";
+import {IncidentRequest} from "../../requests/incident.request.ts";
 
 const IncidentEditPage = () => {
 
@@ -151,17 +152,19 @@ const IncidentEditPage = () => {
         for (const check of checks) {
             if (!check.value) {
                 setSaveMessage("Check is empty")
+                return;
             }
             if (check.value.length > 64) {
                 setSaveMessage("Check is too long")
+                return;
             }
         }
 
-        const incidentRequest = {
+        const incidentRequest: IncidentRequest = {
             assignee: assignee,
             title: title,
             system: system,
-            time: dateParse(time),
+            time: dateParse(time).toISOString(),
             status: status,
             severity: severity,
             type: type,

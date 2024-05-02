@@ -82,7 +82,7 @@ const TaskPage = () => {
             <Linear>
                 {
                     taskData ? (
-                        <Discussion discussion={taskData.discussion}/>
+                        <Discussion id={taskData.discussionId}/>
                     ) : (
                         <Skeleton height={32}/>
                     )

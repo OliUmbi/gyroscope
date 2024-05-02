@@ -1,3 +1,4 @@
 export interface DiscussionCreateProps {
-    id: string
+    id: string,
+    reload: () => void
 }

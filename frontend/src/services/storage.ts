@@ -33,5 +33,8 @@ export const storage = {
         listener.callback()
       }
     }
+  },
+  remove(name: string) {
+    localStorage.removeItem(name)
   }
 };
