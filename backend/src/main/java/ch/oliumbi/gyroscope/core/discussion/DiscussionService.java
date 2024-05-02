@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class DiscussionService {
 
-    private DiscussionRepository discussionRepository;
+    private final DiscussionRepository discussionRepository;
 
     public DiscussionService(DiscussionRepository discussionRepository) {
         this.discussionRepository = discussionRepository;

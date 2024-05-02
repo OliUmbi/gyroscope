@@ -1,8 +1,11 @@
 package ch.oliumbi.gyroscope.endpoints.incident;
 
+import ch.oliumbi.gyroscope.endpoints.Session;
 import ch.oliumbi.gyroscope.endpoints.discussion.DiscussionMapper;
 import ch.oliumbi.gyroscope.endpoints.discussion.responses.DiscussionCommentResponse;
 import ch.oliumbi.gyroscope.endpoints.discussion.responses.DiscussionResponse;
+import ch.oliumbi.gyroscope.endpoints.incident.requests.IncidentCheckRequest;
+import ch.oliumbi.gyroscope.endpoints.incident.requests.IncidentRequest;
 import ch.oliumbi.gyroscope.endpoints.incident.responses.IncidentCheckResponse;
 import ch.oliumbi.gyroscope.endpoints.incident.responses.IncidentResponse;
 import ch.oliumbi.gyroscope.endpoints.profile.ProfileMapper;
@@ -15,6 +18,8 @@ import ch.oliumbi.gyroscope.core.incident.dtos.IncidentCheckDTO;
 import ch.oliumbi.gyroscope.core.incident.dtos.IncidentDTO;
 import ch.oliumbi.gyroscope.core.profile.ProfileService;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileDTO;
+import ch.oliumbi.gyroscope.endpoints.responses.IdResponse;
+import ch.oliumbi.gyroscope.endpoints.responses.MessageResponse;
 import ch.oliumbi.gyroscope.security.SecurityAuthority;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.annotation.Secured;
@@ -46,7 +51,7 @@ public class IncidentController {
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)
-    @GetMapping("/")
+    @GetMapping()
     public List<IncidentResponse> load() {
         List<IncidentDTO> incidentDTOs = incidentService.load();
 
@@ -75,9 +80,11 @@ public class IncidentController {
         ProfileResponse creatorProfileResponse = profileMapper.map(creatorProfileDTO);
         incidentResponse.setCreator(creatorProfileResponse);
 
-        ProfileDTO assigneeProfileDTO = profileService.load(incidentDTO.getAssigneeProfileId());
-        ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
-        incidentResponse.setAssignee(assigneeProfileResponse);
+        if (incidentDTO.getAssigneeProfileId() != null) {
+            ProfileDTO assigneeProfileDTO = profileService.load(incidentDTO.getAssigneeProfileId());
+            ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
+            incidentResponse.setAssignee(assigneeProfileResponse);
+        }
 
         DiscussionDTO discussionDTO = discussionService.load(incidentDTO.getDiscussionId());
         DiscussionResponse discussionResponse = discussionMapper.map(discussionDTO);
@@ -95,5 +102,39 @@ public class IncidentController {
         incidentResponse.setDiscussion(discussionResponse);
 
         return incidentResponse;
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @PostMapping()
+    public IdResponse create(@RequestBody IncidentRequest incidentRequest) {
+        UUID id = incidentService.create(Session.currentId(), incidentRequest.getAssignee(), discussionService.create(), incidentRequest.getTitle(), incidentRequest.getSystem(), incidentRequest.getTime(), incidentRequest.getStatus(), incidentRequest.getSeverity(), incidentRequest.getType());
+
+        for (IncidentCheckRequest incidentRequestCheck : incidentRequest.getChecks()) {
+            incidentService.createCheck(id, incidentRequestCheck.getValue(), incidentRequestCheck.getChecked());
+        }
+
+        return new IdResponse(id);
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @PutMapping("/{id}")
+    public MessageResponse update(@PathVariable("id") UUID id, @RequestBody IncidentRequest incidentRequest) {
+        incidentService.update(id, incidentRequest.getAssignee(), incidentRequest.getTitle(), incidentRequest.getSystem(), incidentRequest.getTime(), incidentRequest.getStatus(), incidentRequest.getSeverity(), incidentRequest.getType());
+
+        incidentService.deleteCheck(id);
+
+        for (IncidentCheckRequest incidentRequestCheck : incidentRequest.getChecks()) {
+            incidentService.createCheck(id, incidentRequestCheck.getValue(), incidentRequestCheck.getChecked());
+        }
+
+        return new MessageResponse("Successfully updated incident");
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @DeleteMapping("/{id}")
+    public MessageResponse delete(@PathVariable("id") UUID id) {
+        incidentService.delete(id);
+
+        return new MessageResponse("Successfully deleted incident");
     }
 }

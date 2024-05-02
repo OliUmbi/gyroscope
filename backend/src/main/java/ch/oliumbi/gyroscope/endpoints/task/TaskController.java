@@ -1,10 +1,14 @@
 package ch.oliumbi.gyroscope.endpoints.task;
 
+import ch.oliumbi.gyroscope.endpoints.Session;
 import ch.oliumbi.gyroscope.endpoints.discussion.DiscussionMapper;
 import ch.oliumbi.gyroscope.endpoints.discussion.responses.DiscussionCommentResponse;
 import ch.oliumbi.gyroscope.endpoints.discussion.responses.DiscussionResponse;
 import ch.oliumbi.gyroscope.endpoints.profile.ProfileMapper;
 import ch.oliumbi.gyroscope.endpoints.profile.responses.ProfileResponse;
+import ch.oliumbi.gyroscope.endpoints.responses.IdResponse;
+import ch.oliumbi.gyroscope.endpoints.responses.MessageResponse;
+import ch.oliumbi.gyroscope.endpoints.task.requests.TaskRequest;
 import ch.oliumbi.gyroscope.endpoints.task.responses.TaskResponse;
 import ch.oliumbi.gyroscope.core.discussion.DiscussionService;
 import ch.oliumbi.gyroscope.core.discussion.dtos.DiscussionCommentDTO;
@@ -16,10 +20,7 @@ import ch.oliumbi.gyroscope.core.task.dtos.TaskDTO;
 import ch.oliumbi.gyroscope.security.SecurityAuthority;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class TaskController {
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)
-    @GetMapping("/")
+    @GetMapping()
     public List<TaskResponse> load() {
         List<TaskDTO> taskDTOs = taskService.load();
 
@@ -75,9 +76,11 @@ public class TaskController {
         ProfileResponse creatorProfileResponse = profileMapper.map(creatorProfileDTO);
         taskResponse.setCreator(creatorProfileResponse);
 
-        ProfileDTO assigneeProfileDTO = profileService.load(taskDTO.getAssigneeProfileId());
-        ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
-        taskResponse.setAssignee(assigneeProfileResponse);
+        if (taskDTO.getAssigneeProfileId() != null) {
+            ProfileDTO assigneeProfileDTO = profileService.load(taskDTO.getAssigneeProfileId());
+            ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
+            taskResponse.setAssignee(assigneeProfileResponse);
+        }
 
         DiscussionDTO discussionDTO = discussionService.load(taskDTO.getDiscussionId());
         DiscussionResponse discussionResponse = discussionMapper.map(discussionDTO);
@@ -95,5 +98,29 @@ public class TaskController {
         taskResponse.setDiscussion(discussionResponse);
 
         return taskResponse;
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @PostMapping()
+    public IdResponse create(@RequestBody TaskRequest taskRequest) {
+        UUID id = taskService.create(Session.currentId(), taskRequest.getAssignee(), discussionService.create(), taskRequest.getTitle(), taskRequest.getStatus(), taskRequest.getPriority());
+
+        return new IdResponse(id);
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @PutMapping("/{id}")
+    public MessageResponse update(@PathVariable("id") UUID id, @RequestBody TaskRequest taskRequest) {
+        taskService.update(id, taskRequest.getAssignee(), taskRequest.getTitle(), taskRequest.getStatus(), taskRequest.getPriority());
+
+        return new MessageResponse("Successfully updated task");
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
+    @DeleteMapping("/{id}")
+    public MessageResponse delete(@PathVariable("id") UUID id) {
+        taskService.delete(id);
+
+        return new MessageResponse("Successfully deleted task");
     }
 }

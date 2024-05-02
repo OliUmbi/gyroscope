@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -17,4 +17,6 @@ public class SecurityProperties {
     private Long expirationInHours;
     private String[] excluded;
     private String[] origins;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 }

@@ -11,7 +11,7 @@ const TaskSummary = (props: TaskSummaryProps) => {
                 <Text type="s" mono={true} bold={false} highlight={false}>{props.task.priority}</Text>
                 <div>
                     <Text type="p" mono={false} bold={true} highlight={true}>{props.task.title}</Text>
-                    <Text type="s" mono={false} bold={false} highlight={false}>{props.task.assignee.name}</Text>
+                    <Text type="s" mono={false} bold={false} highlight={false}>{props.task.assignee ? props.task.assignee.name : "Undefined"}</Text>
                 </div>
             </div>
         </Link>

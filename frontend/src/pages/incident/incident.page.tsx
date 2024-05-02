@@ -4,30 +4,24 @@ import Discussion from "../../components/complex/discussion/discussion.tsx";
 import IncidentDetail from "../../components/complex/incident/detail/incident-detail.tsx";
 import Split from "../../components/layout/split/split.tsx";
 import Linear from "../../components/layout/linear/linear.tsx";
-import useSubscribe from "../../hooks/use-subscribe.ts";
-import {IncidentResponse} from "../../responses/incident.response.ts";
-import usePublish from "../../hooks/use-publish.ts";
+import useApi from "../../hooks/use-api.ts";
 import {useEffect} from "react";
-import {IdRequest} from "../../requests/id.request.ts";
 import {useParams} from "react-router-dom";
 import SkeletonText from "../../components/base/skeleton-text/skeleton-text.tsx";
 import {locale} from "../../utils/locale.util.ts";
 import {dateConvert} from "../../utils/date.util.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
+import {IncidentResponse} from "../../responses/incident.response.ts";
+import {Method} from "../../enums/method.enum.ts";
 
 const IncidentPage = () => {
 
     let {id} = useParams();
-    const [incidentResponse] = useSubscribe<IncidentResponse>("/incident/id")
-    const [loadIncident] = usePublish("/incident/id")
+    const [incident, incidentData] = useApi<IncidentResponse>()
 
     useEffect(() => {
         if (id) {
-            let idRequest: IdRequest = {
-                id: id
-            }
-
-            loadIncident(idRequest)
+            incident("incident/" + id, Method.GET)
         }
     }, [id]);
 
@@ -36,15 +30,15 @@ const IncidentPage = () => {
             <Linear>
                 <div>
                     {
-                        incidentResponse ? (
-                            <Text type="s" mono={true} bold={false} highlight={false}>{locale(dateConvert(incidentResponse.time))}</Text>
+                        incidentData ? (
+                            <Text type="s" mono={true} bold={false} highlight={false}>{locale(dateConvert(incidentData.time))}</Text>
                         ) : (
                             <SkeletonText type="s"/>
                         )
                     }
                     {
-                        incidentResponse ? (
-                            <Text type="h2" mono={false} bold={true} highlight={true}>{incidentResponse.title}</Text>
+                        incidentData ? (
+                            <Text type="h2" mono={false} bold={true} highlight={true}>{incidentData.title}</Text>
                         ) : (
                             <SkeletonText type="h2"/>
                         )
@@ -53,16 +47,16 @@ const IncidentPage = () => {
                 <Split>
                     <Split>
                         {
-                            incidentResponse?.assignee && incidentResponse?.creator ? (
+                            incidentData ? (
                                 <>
-                                    <IncidentDetail name="Status" value={incidentResponse.status}/>
-                                    <IncidentDetail name="Severity" value={incidentResponse.severity}/>
-                                    <IncidentDetail name="Type" value={incidentResponse.type}/>
-                                    <IncidentDetail name="System" value={incidentResponse.system}/>
-                                    <IncidentDetail name="Assignee" value={incidentResponse.assignee.name}/>
-                                    <IncidentDetail name="Creator" value={incidentResponse.creator.name}/>
-                                    <IncidentDetail name="Created" value={locale(dateConvert(incidentResponse.created))}/>
-                                    <IncidentDetail name="Updated" value={locale(dateConvert(incidentResponse.updated))}/>
+                                    <IncidentDetail name="Status" value={incidentData.status}/>
+                                    <IncidentDetail name="Severity" value={incidentData.severity}/>
+                                    <IncidentDetail name="Type" value={incidentData.type}/>
+                                    <IncidentDetail name="System" value={incidentData.system}/>
+                                    <IncidentDetail name="Assignee" value={incidentData.assignee ? incidentData.assignee.name : "Undefined"}/>
+                                    <IncidentDetail name="Creator" value={incidentData.creator.name}/>
+                                    <IncidentDetail name="Created" value={locale(dateConvert(incidentData.created))}/>
+                                    <IncidentDetail name="Updated" value={locale(dateConvert(incidentData.updated))}/>
                                 </>
                             ) : (
                                 <>
@@ -80,8 +74,8 @@ const IncidentPage = () => {
                     </Split>
                     <Linear>
                         {
-                            incidentResponse?.checks ? (
-                                incidentResponse.checks.map((check, key) => <IncidentCheck check={check} key={key}/>)
+                            incidentData ? (
+                                incidentData.checks.map((check, key) => <IncidentCheck check={check} key={key}/>)
                             ) : (
                                 <>
                                     <Skeleton height={3.75}/>
@@ -98,8 +92,8 @@ const IncidentPage = () => {
             </Linear>
             <Linear>
                 {
-                    incidentResponse?.discussion ? (
-                        <Discussion discussion={incidentResponse.discussion}/>
+                    incidentData ? (
+                        <Discussion discussion={incidentData.discussion}/>
                     ) : (
                         <Skeleton height={32}/>
                     )

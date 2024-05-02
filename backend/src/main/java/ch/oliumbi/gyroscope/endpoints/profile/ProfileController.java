@@ -6,6 +6,8 @@ import ch.oliumbi.gyroscope.core.profile.ProfileService;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileDTO;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileScheduleDTO;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileSessionDTO;
+import ch.oliumbi.gyroscope.endpoints.responses.IdResponse;
+import ch.oliumbi.gyroscope.endpoints.responses.MessageResponse;
 import ch.oliumbi.gyroscope.security.SecurityAuthority;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.annotation.Secured;
@@ -31,7 +33,7 @@ public class ProfileController {
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)
-    @GetMapping("/")
+    @GetMapping()
     public List<ProfileResponse> load() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -89,6 +91,22 @@ public class ProfileController {
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)
+    @GetMapping("/{id}/session")
+    public ProfileResponse loadIdSession(@PathVariable("id") UUID id) {
+        // todo session handling
+        ProfileDTO profileDTO = profileService.load(id);
+
+        ProfileResponse profileResponse = profileMapper.map(profileDTO);
+
+        List<ProfileSessionDTO> profileSessionDTOs = profileService.loadSessions(profileDTO.getId());
+        for (ProfileSessionDTO profileSessionDTO : profileSessionDTOs) {
+            profileResponse.getSessions().add(profileMapper.mapSession(profileSessionDTO));
+        }
+
+        return profileResponse;
+    }
+
+    @Secured(SecurityAuthority.AUTHENTICATED)
     @GetMapping("/{id}/schedule")
     public ProfileResponse loadIdSchedule(@PathVariable("id") UUID id) {
         // todo session handling
@@ -106,14 +124,17 @@ public class ProfileController {
 
     @Secured(SecurityAuthority.AUTHENTICATED)
     @PostMapping("/schedule")
-    public void createSchedule(@RequestBody ProfileScheduleRequest profileScheduleRequest) {
-        // todo send new data
-        profileService.createSchedule(profileScheduleRequest.getShift());
+    public IdResponse createSchedule(@RequestBody ProfileScheduleRequest profileScheduleRequest) {
+        UUID id = profileService.createSchedule(profileScheduleRequest.getShift());
+
+        return new IdResponse(id);
     }
 
     @Secured(SecurityAuthority.AUTHENTICATED)
     @PutMapping("/schedule/{id}")
-    public void updatedSchedule(@PathVariable("id") UUID id, @RequestBody ProfileScheduleRequest profileScheduleRequest) {
+    public MessageResponse updatedSchedule(@PathVariable("id") UUID id, @RequestBody ProfileScheduleRequest profileScheduleRequest) {
         profileService.updateSchedule(id, profileScheduleRequest.getShift());
+
+        return new MessageResponse("Successfully updated profile schedule");
     }
 }

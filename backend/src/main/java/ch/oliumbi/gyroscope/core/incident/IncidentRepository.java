@@ -179,7 +179,8 @@ public class IncidentRepository {
     public void updateCheck(IncidentCheckDTO incidentCheckDTO) {
         database.update("""
                                 UPDATE  incident_check
-                                SET     value = :value,
+                                SET     incident_id = :incidentId,
+                                        value = :value,
                                         checked = :checked
                                 WHERE   id = :id
                                 AND     deleted = FALSE
@@ -198,13 +199,13 @@ public class IncidentRepository {
                 .orElseThrow(() -> new InternalServerErrorException("failed to delete incident"));
     }
 
-    public void deleteCheck(UUID id) {
+    public void deleteCheck(UUID incidentId) {
         database.update("""
                                 UPDATE  incident_check
                                 SET     deleted = TRUE
-                                WHERE   id = :id
+                                WHERE   incident_id = :incidentId
                                 """,
-                        new Input("id", id))
+                        new Input("incidentId", incidentId))
                 .orElseThrow(() -> new InternalServerErrorException("failed to delete incident check"));
     }
 }

@@ -15,10 +15,10 @@ const Input = (props: InputProps) => {
             <Text type="s" mono={true} bold={false} highlight={false}>{props.label} {props.required ? "[required]" : ""}</Text>
             {
                 props.rows === undefined ? (
-                    <input className="input__body" type={props.type} value={props.value} onChange={handleOnChange}
+                    <input className="input__body" type={props.type} value={props.value ? props.value : ""} onChange={handleOnChange}
                            required={props.required} placeholder={props.placeholder}/>
                 ) : (
-                    <textarea className="input__body" value={props.value} onChange={handleOnChange} rows={props.rows}
+                    <textarea className="input__body" value={props.value ? props.value : ""} onChange={handleOnChange} rows={props.rows}
                               required={props.required} placeholder={props.placeholder}/>
                 )
             }

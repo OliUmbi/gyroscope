@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS profile CASCADE;
 CREATE TABLE profile
 (
     id       UUID        NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    name     VARCHAR(32) NOT NULL,
+    name     VARCHAR(32) NOT NULL UNIQUE,
     password VARCHAR(64) NOT NULL,
 
     created  TIMESTAMP   NOT NULL             DEFAULT current_timestamp,

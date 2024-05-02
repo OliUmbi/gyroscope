@@ -20,7 +20,7 @@ public class ProfileRepository {
         this.database = database;
     }
 
-    public List<ProfileDTO> load() {
+    public List<ProfileDTO> loadByToken() {
         return database.query("""
                                 SELECT  id,
                                         name,
@@ -39,7 +39,7 @@ public class ProfileRepository {
                 .orElseThrow(() -> new InternalServerErrorException("failed to load profiles"));
     }
 
-    public ProfileDTO load(UUID id) {
+    public ProfileDTO loadByToken(UUID id) {
         return database.querySingle("""
                                 SELECT  id,
                                         name,
@@ -60,7 +60,28 @@ public class ProfileRepository {
                 .orElseThrow(() -> new InternalServerErrorException("failed to load profile with id: " + id));
     }
 
-    public ProfileDTO load(String token) {
+    public ProfileDTO loadByName(String name) {
+        return database.querySingle("""
+                                SELECT  id,
+                                        name,
+                                        password,
+                                        created,
+                                        updated
+                                FROM    profile p
+                                WHERE   deleted = FALSE
+                                AND     name = :name
+                                INTO    id,
+                                        name,
+                                        password,
+                                        created,
+                                        updated
+                                """,
+                        ProfileDTO.class,
+                        new Input("name", name))
+                .orElseThrow(() -> new InternalServerErrorException("failed to load profile with name: " + name));
+    }
+
+    public ProfileDTO loadByToken(String token) {
         return database.querySingle("""
                                 SELECT  p.id,
                                         p.name,
@@ -133,54 +154,21 @@ public class ProfileRepository {
                 .orElseThrow(() -> new InternalServerErrorException("failed to load profile schedule with profile id: " + profileId));
     }
 
-    public List<ProfileScheduleDTO> loadScheduleTimeline(UUID profileId) {
-        return database.query("""
-                                SELECT  id,
+    public void createSession(ProfileSessionDTO profileSessionDTO) {
+        database.update("""
+                                INSERT INTO profile_session (
+                                        id,
                                         profile_id,
-                                        time,
-                                        profile_schedule_shift,
-                                        created,
-                                        updated
-                                FROM    profile_schedule
-                                WHERE   deleted = FALSE
-                                AND     profile_id = :profileId
-                                AND     time > current_timestamp - interval '3 hours'
-                                ORDER BY time DESC
-                                INTO    id,
-                                        profileId,
-                                        time,
-                                        profileScheduleShift,
-                                        created,
-                                        updated
+                                        token,
+                                        expires)
+                                VALUES (
+                                        :id,
+                                        :profileId,
+                                        :token,
+                                        :expires)
                                 """,
-                        ProfileScheduleDTO.class,
-                        new Input("profileId", profileId))
-                .orElseThrow(() -> new InternalServerErrorException("failed to load profile schedule timeline with profile id: " + profileId));
-    }
-
-    public List<ProfileScheduleDTO> loadScheduleDashboard(UUID profileId) {
-        return database.query("""
-                                SELECT  id,
-                                        profile_id,
-                                        time,
-                                        profile_schedule_shift,
-                                        created,
-                                        updated
-                                FROM    profile_schedule
-                                WHERE   deleted = FALSE
-                                AND     profile_id = :profileId
-                                AND     time > current_timestamp - interval '1 hours'
-                                LIMIT   1
-                                INTO    id,
-                                        profileId,
-                                        time,
-                                        profileScheduleShift,
-                                        created,
-                                        updated
-                                """,
-                        ProfileScheduleDTO.class,
-                        new Input("profileId", profileId))
-                .orElseThrow(() -> new InternalServerErrorException("failed to load profile schedule timeline with profile id: " + profileId));
+                        profileSessionDTO)
+                .orElseThrow(() -> new InternalServerErrorException("failed to create profile session"));
     }
 
     public void createSchedule(ProfileScheduleDTO profileScheduleDTO) {
@@ -203,7 +191,8 @@ public class ProfileRepository {
     public void updateSchedule(ProfileScheduleDTO profileScheduleDTO) {
         database.update("""
                                 UPDATE  profile_schedule
-                                SET     profile_schedule_shift = :profileScheduleShift
+                                SET     profile_id = :profileId,
+                                        profile_schedule_shift = :profileScheduleShift
                                 WHERE   id = :id
                                 AND     deleted = FALSE
                                 """,

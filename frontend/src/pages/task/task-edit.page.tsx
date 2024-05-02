@@ -6,19 +6,18 @@ import {TaskStatus} from "../../enums/task-status.enum.ts";
 import Input from "../../components/base/input/input.tsx";
 import {TaskPriority} from "../../enums/task-priority.enum.ts";
 import Split from "../../components/layout/split/split.tsx";
-import useSubscribe from "../../hooks/use-subscribe.ts";
-import usePublish from "../../hooks/use-publish.ts";
+import useApi from "../../hooks/use-api.ts";
 import {ProfileResponse} from "../../responses/profile.response.ts";
 import {useEffect} from "react";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
+import {Method} from "../../enums/method.enum.ts";
 
 const TaskEditPage = () => {
 
-    const [profileResponses] = useSubscribe<ProfileResponse[]>("/profile")
-    const [dashboardProfile] = usePublish("/profile")
+    const [profiles, profilesData] = useApi<ProfileResponse[]>()
 
     useEffect(() => {
-        dashboardProfile("")
+        profiles("profile", Method.GET)
     }, []);
 
     return (
@@ -90,8 +89,8 @@ const TaskEditPage = () => {
             </Split>
             <Split>
                 {
-                    profileResponses ? (
-                        <Select value={null} setValue={() => {}} options={[{name: "Undefined", value: null}, ...profileResponses.map(value => {return {name: value.name, value: value.id}})]} label="Assigned" required={false} message=""/>
+                    profilesData ? (
+                        <Select value={null} setValue={() => {}} options={[{name: "Undefined", value: null}, ...profilesData.map(value => {return {name: value.name, value: value.id}})]} label="Assigned" required={false} message=""/>
                     ) : (
                         <Skeleton height={32}/>
                     )

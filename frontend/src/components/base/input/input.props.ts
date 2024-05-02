@@ -1,5 +1,5 @@
 export interface InputProps {
-    value: string,
+    value: string | null,
     setValue: (value: string) => void,
     type: "text" | "password" | "email"
     label: string,

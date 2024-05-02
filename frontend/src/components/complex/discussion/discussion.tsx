@@ -10,9 +10,7 @@ const Discussion = (props: DiscussionProps) => {
             {
                 props.discussion.comments.map((comment, key) => <DiscussionComment comment={comment} key={key}/>)
             }
-
             <DiscussionCreate id={props.discussion.id}/>
-
         </div>
     )
 }

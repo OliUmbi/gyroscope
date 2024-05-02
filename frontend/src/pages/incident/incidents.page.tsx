@@ -1,26 +1,25 @@
 import IncidentSummary from "../../components/complex/incident/summary/incident-summary.tsx";
 import Split from "../../components/layout/split/split.tsx";
-import useSubscribe from "../../hooks/use-subscribe.ts";
-import usePublish from "../../hooks/use-publish.ts";
+import useApi from "../../hooks/use-api.ts";
 import {useEffect} from "react";
 import {IncidentResponse} from "../../responses/incident.response.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
+import {Method} from "../../enums/method.enum.ts";
 
 const IncidentsPage = () => {
 
-    const [incidentResponses] = useSubscribe<IncidentResponse[]>("/incident")
-    const [loadIncidents] = usePublish("/incident")
+    const [incidents, incidentsData] = useApi<IncidentResponse[]>()
 
     useEffect(() => {
-        loadIncidents("")
+        incidents("incident", Method.GET)
     }, []);
 
     return (
         <>
             <Split>
                 {
-                    incidentResponses ? (
-                        incidentResponses.map((incidentResponses, key) => <IncidentSummary incidentResponse={incidentResponses} key={key}/>)
+                    incidentsData ? (
+                        incidentsData.map((incidentsData, key) => <IncidentSummary incidentResponse={incidentsData} key={key}/>)
                     ) : (
                         <>
                             <Skeleton height={24}/>

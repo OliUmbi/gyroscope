@@ -5,10 +5,10 @@ interface Listener {
 
 let listeners: Listener[] = [];
 
-export const signal = {
-  set(name: string, value: any) {
-    localStorage.setItem(name, String(value))
-    signal.update(name);
+export const storage = {
+  set(name: string, value: string) {
+    localStorage.setItem(name, value)
+    storage.update(name);
   },
   get(name: string) {
     return () => {

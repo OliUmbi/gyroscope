@@ -2,12 +2,12 @@ import "./schedule-edit-shift.scss";
 import IconButton from "../../../base/icon-button/icon-button.tsx";
 import {ProfileScheduleShift} from "../../../../enums/profile-schedule-shift.enum.ts";
 import Text from "../../../base/text/text.tsx";
-import usePublish from "../../../../hooks/use-publish.ts";
+import useApi from "../../../../hooks/use-api.ts";
 import {ProfileCreateScheduleRequest} from "../../../../requests/profile-create-schedule.request.ts";
 
 const ScheduleEditShift = () => {
 
-    const [profileScheduleCreate] = usePublish("/profile/schedule/create")
+    const [profileScheduleCreate] = useApi("/profile/schedule/create")
 
     const onClick = (shift: ProfileScheduleShift) => {
         const profileCreateScheduleRequest: ProfileCreateScheduleRequest = {

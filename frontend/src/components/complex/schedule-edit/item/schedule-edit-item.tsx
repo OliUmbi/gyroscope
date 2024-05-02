@@ -5,12 +5,12 @@ import {ScheduleEditItemProps} from "./schedule-edit-item.props.ts";
 import {ProfileScheduleShift} from "../../../../enums/profile-schedule-shift.enum.ts";
 import {localeDate, localeTime} from "../../../../utils/locale.util.ts";
 import {dateConvert} from "../../../../utils/date.util.ts";
-import usePublish from "../../../../hooks/use-publish.ts";
+import useApi from "../../../../hooks/use-api.ts";
 import {ProfileUpdatedScheduleRequest} from "../../../../requests/profile-updated-schedule.request.ts";
 
 const ScheduleEditItem = (props: ScheduleEditItemProps) => {
 
-    const [profileScheduleUpdate] = usePublish("/profile/schedule/update")
+    const [profileScheduleUpdate] = useApi("/profile/schedule/update")
 
     const onClick = (shift: ProfileScheduleShift) => {
         const profileUpdatedScheduleRequest: ProfileUpdatedScheduleRequest = {

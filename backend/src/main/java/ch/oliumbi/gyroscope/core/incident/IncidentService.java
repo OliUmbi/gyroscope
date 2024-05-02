@@ -80,9 +80,10 @@ public class IncidentService {
         incidentRepository.update(incidentDTO);
     }
 
-    public void updateCheck(UUID id, String value, Boolean checked) {
+    public void updateCheck(UUID id, UUID incidentId, String value, Boolean checked) {
         IncidentCheckDTO incidentCheckDTO = new IncidentCheckDTO();
         incidentCheckDTO.setId(id);
+        incidentCheckDTO.setIncidentId(incidentId);
         incidentCheckDTO.setValue(value);
         incidentCheckDTO.setChecked(checked);
 
@@ -93,7 +94,7 @@ public class IncidentService {
         incidentRepository.delete(id);
     }
 
-    public void deleteCheck(UUID id) {
-        incidentRepository.deleteCheck(id);
+    public void deleteCheck(UUID incidentId) {
+        incidentRepository.deleteCheck(incidentId);
     }
 }
