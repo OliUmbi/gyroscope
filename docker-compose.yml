@@ -1,0 +1,43 @@
+services:
+  gyroscope-database:
+    image: gyroscope-database:${VERSION}
+    restart: always
+    ports:
+      - 8002:5432
+    networks:
+      - gyroscope-network
+    volumes:
+      - "gyroscope-volume:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+
+  gyroscope-backend:
+    image: gyroscope-backend:${VERSION}
+    restart: always
+    ports:
+      - 8001:8081
+    networks:
+      - gyroscope-network
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - BACKEND_ORIGINS=${BACKEND_ORIGINS}
+
+  gyroscope-frontend:
+    image: gyroscope-frontend:${VERSION}
+    restart: always
+    ports:
+      - 8000:80
+    networks:
+      - gyroscope-network
+
+networks:
+  gyroscope-network:
+
+volumes:
+  gyroscope-volume:
