@@ -11,13 +11,14 @@ import useStorage from "../../hooks/use-storage.ts";
 import {Method} from "../../enums/method.enum.ts";
 import {storage} from "../../services/storage.ts";
 import {useNavigate} from "react-router-dom";
+import Error from "../../components/complex/error/error.tsx";
 
 const ProfilePage = () => {
 
     const navigate = useNavigate()
 
     const [profileId] = useStorage("profileId")
-    const [profile, profileData] = useApi<ProfileResponse>()
+    const [profile, profileData, profileError] = useApi<ProfileResponse>()
 
     useEffect(() => {
         if (profileId) {
@@ -34,6 +35,7 @@ const ProfilePage = () => {
 
     return (
         <>
+            <Error title="Failed to load profile" message={profileError}/>
             <Linear>
                 <Text type="s" mono={true} bold={false} highlight={false}>Details</Text>
                 {

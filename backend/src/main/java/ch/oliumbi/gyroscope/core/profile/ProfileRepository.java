@@ -1,6 +1,7 @@
 package ch.oliumbi.gyroscope.core.profile;
 
 import ch.oliumbi.compass.sql.input.Input;
+import ch.oliumbi.compass.sql.output.Output;
 import ch.oliumbi.gyroscope.core.profile.dtos.ProfileScheduleDTO;
 import ch.oliumbi.gyroscope.database.Database;
 import ch.oliumbi.gyroscope.errorhandling.InternalServerErrorException;
@@ -142,6 +143,31 @@ public class ProfileRepository {
                                 WHERE   deleted = FALSE
                                 AND     profile_id = :profileId
                                 ORDER BY time DESC
+                                INTO    id,
+                                        profileId,
+                                        time,
+                                        profileScheduleShift,
+                                        created,
+                                        updated
+                                """,
+                        ProfileScheduleDTO.class,
+                        new Input("profileId", profileId))
+                .orElseThrow(() -> new InternalServerErrorException("failed to load profile schedule with profile id: " + profileId));
+    }
+
+    public List<ProfileScheduleDTO> loadScheduleLast(UUID profileId) {
+        return database.query("""
+                                SELECT  id,
+                                        profile_id,
+                                        time,
+                                        profile_schedule_shift,
+                                        created,
+                                        updated
+                                FROM    profile_schedule
+                                WHERE   deleted = FALSE
+                                AND     profile_id = :profileId
+                                ORDER BY time DESC
+                                LIMIT   1
                                 INTO    id,
                                         profileId,
                                         time,

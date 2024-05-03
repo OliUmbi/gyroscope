@@ -5,7 +5,7 @@ import {IncidentCheckRequest} from "./incident-check.request.ts";
 
 export interface IncidentRequest {
 
-    assignee: string,
+    assignee: string | null,
     title: string,
     system: string,
     time: string,

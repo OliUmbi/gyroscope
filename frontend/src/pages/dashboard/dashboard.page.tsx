@@ -13,22 +13,31 @@ import {IncidentResponse} from "../../responses/incident.response.ts";
 import {TaskResponse} from "../../responses/task.response.ts";
 import {useEffect} from "react";
 import {Method} from "../../enums/method.enum.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const DashboardPage = () => {
 
-    const [profiles, profilesData] = useApi<ProfileResponse[]>()
-    const [incidents, incidentsData] = useApi<IncidentResponse[]>()
-    const [tasks, tasksData] = useApi<TaskResponse[]>()
+    const [schedules, schedulesData, schedulesError] = useApi<ProfileResponse[]>()
+    const [incidents, incidentsData, incidentsError] = useApi<IncidentResponse[]>()
+    const [tasks, tasksData, tasksError] = useApi<TaskResponse[]>()
 
     useEffect(() => {
-        profiles("profile/schedule", Method.GET)
+        schedules("profile/schedule", Method.GET)
         incidents("incident", Method.GET)
         tasks("task", Method.GET)
+
+        let interval = setInterval(() => {
+            schedules("profile/schedule", Method.GET)
+            incidents("incident", Method.GET)
+            tasks("task", Method.GET)
+        }, 20000)
+
+        return () => clearInterval(interval)
     }, []);
 
     const filterProfiles = (shift: ProfileScheduleShift): ProfileResponse[] => {
-        if (profilesData) {
-            return profilesData.filter(value => {
+        if (schedulesData) {
+            return schedulesData.filter(value => {
                 if (value.schedule.length > 0) {
                     return value.schedule[0].shift === shift
                 }
@@ -62,9 +71,10 @@ const DashboardPage = () => {
         <>
 
             <Linear>
+                <Error title="Failed to load schedules" message={schedulesError}/>
                 <Split>
                     {
-                        profilesData ? (
+                        schedulesData ? (
                             <>
                                 <DashboardSchedule icon="monitor" title="Monitoring / On Call" profiles={filterProfiles(ProfileScheduleShift.MONITORING)}/>
                                 <DashboardSchedule icon="terminal" title="Working" profiles={filterProfiles(ProfileScheduleShift.WORK)}/>
@@ -82,6 +92,8 @@ const DashboardPage = () => {
                     }
                 </Split>
                 <Split>
+                    <Error title="Failed to load incidents" message={incidentsError}/>
+                    <Error title="Failed to load tasks" message={tasksError}/>
                     <Split>
                         {
                             incidentsData ? (

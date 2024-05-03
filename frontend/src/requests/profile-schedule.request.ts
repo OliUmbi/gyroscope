@@ -1,5 +1,5 @@
 import {ProfileScheduleShift} from "../enums/profile-schedule-shift.enum.ts";
 
-export interface ProfileCreateScheduleRequest {
+export interface ProfileScheduleRequest {
     shift: ProfileScheduleShift
 }

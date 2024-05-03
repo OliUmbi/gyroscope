@@ -7,6 +7,7 @@ import {localeTime} from "../../../../utils/locale.util.ts";
 import {ProfileScheduleShift} from "../../../../enums/profile-schedule-shift.enum.ts";
 import {ScheduleTimelineProps} from "./schedule-timeline.props.ts";
 import {dateConvert} from "../../../../utils/date.util.ts";
+import {ProfileScheduleResponse} from "../../../../responses/profile-schedule.response.ts";
 
 const ScheduleTimeline = (props: ScheduleTimelineProps) => {
 
@@ -33,18 +34,28 @@ const ScheduleTimeline = (props: ScheduleTimelineProps) => {
         }
     }
 
+    const timeline = (): ProfileScheduleResponse[] => {
+        if (props.profileResponse) {
+            let limit = new Date()
+            limit.setHours(limit.getHours() - 4)
+
+            return [...props.profileResponse.schedule].filter(schedule => dateConvert(schedule.time) > limit).reverse()
+        }
+        return []
+    }
+
     return (
         <div className="schedule-timeline">
             <div className="schedule-timeline__head">
                 <div>
                     <Text type="h3" mono={false} bold={true} highlight={true}>{props.profileResponse.name}</Text>
-                    <Text type="p" mono={true} bold={false} highlight={false}>Current: S</Text>
+                    <Text type="p" mono={true} bold={false} highlight={false}>Current: {props.profileResponse.schedule.find(value => dateConvert(value.time) > new Date())?.shift}</Text>
                 </div>
                 <IconButton onClick={() => scroll()} highlight={false}>visibility</IconButton>
             </div>
             <div className="schedule-timeline__body">
                 {
-                    props.profileResponse.schedule.map((schedule, key) => (
+                    timeline().map((schedule, key) => (
                         <div className={"schedule-timeline__element " + (dateConvert(schedule.time) > new Date() ? "future" : "past")} ref={key === props.profileResponse.schedule.findIndex(value => dateConvert(value.time) > new Date()) ? focus : undefined} key={key}>
                             <Icon>{icon(schedule.shift)}</Icon>
                             <Text type="s" mono={true} bold={false} highlight={false}>{localeTime(dateConvert(schedule.time))}</Text>

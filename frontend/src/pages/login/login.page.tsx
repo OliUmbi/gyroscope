@@ -9,12 +9,13 @@ import {storage} from "../../services/storage.ts";
 import {useNavigate} from "react-router-dom";
 import {AuthenticationRequest} from "../../requests/authentication.request.ts";
 import {AuthenticationResponse} from "../../responses/authentication.response.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const LoginPage = () => {
 
     const navigate = useNavigate();
 
-    const [authentication, authenticationData] = useApi<AuthenticationResponse>()
+    const [authentication, authenticationData, authenticationError] = useApi<AuthenticationResponse>()
 
     const [name, setName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -30,6 +31,10 @@ const LoginPage = () => {
     }, [authenticationData]);
 
     const login = () => {
+        storage.remove("profileId")
+        storage.remove("token")
+        storage.remove("expires")
+
         let request: AuthenticationRequest = {
             name: name,
             password: password
@@ -48,6 +53,7 @@ const LoginPage = () => {
                 <Button onClick={login} highlight={false}>
                     <Text type="p" mono={false} bold={true} highlight={true}>Login</Text>
                 </Button>
+                <Error title="Login failed" message={authenticationError}/>
             </Linear>
         </>
     )

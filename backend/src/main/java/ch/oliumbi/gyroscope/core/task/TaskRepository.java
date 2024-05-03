@@ -108,11 +108,8 @@ public class TaskRepository {
                                 UPDATE  task
                                 SET     assignee_profile_id = :assigneeProfileId,
                                         title = :title,
-                                        system = :system,
-                                        time = :time,
-                                        incident_status = :incidentStatus,
-                                        incident_severity = :incidentSeverity,
-                                        incident_type = :incidentType
+                                        task_status = :taskStatus,
+                                        task_priority = :taskPriority
                                 WHERE   id = :id
                                 AND     deleted = FALSE
                                 """,

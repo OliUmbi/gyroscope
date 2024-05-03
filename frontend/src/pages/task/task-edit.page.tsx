@@ -8,30 +8,126 @@ import {TaskPriority} from "../../enums/task-priority.enum.ts";
 import Split from "../../components/layout/split/split.tsx";
 import useApi from "../../hooks/use-api.ts";
 import {ProfileResponse} from "../../responses/profile.response.ts";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import {Method} from "../../enums/method.enum.ts";
+import {IdResponse} from "../../responses/id.response.ts";
+import {MessageResponse} from "../../responses/message.response.ts";
+import {useNavigate, useParams} from "react-router-dom";
+import {TaskRequest} from "../../requests/task.request.ts";
+import Error from "../../components/complex/error/error.tsx";
+import {TaskResponse} from "../../responses/task.response.ts";
 
 const TaskEditPage = () => {
 
-    const [profiles, profilesData] = useApi<ProfileResponse[]>()
+    const {id} = useParams()
+    const navigate = useNavigate();
+
+    const [task, taskData, taskError] = useApi<TaskResponse>()
+    const [taskCreate, taskCreateData, taskCreateError] = useApi<IdResponse>()
+    const [taskUpdate, taskUpdateData, taskUpdateError] = useApi<MessageResponse>()
+    const [taskDelete, taskDeleteData, taskDeleteError] = useApi<MessageResponse>()
+    const [profiles, profilesData, profilesError] = useApi<ProfileResponse[]>()
+
+    const [title, setTitle] = useState<string | null>(null)
+    const [titleMessage, setTitleMessage] = useState<string>("")
+    const [status, setStatus] = useState<TaskStatus | null>(null)
+    const [priority, setPriority] = useState<TaskPriority | null>(null)
+    const [assignee, setAssignee] = useState<string | null>(null)
+    const [saveMessage, setSaveMessage] = useState<string>("")
 
     useEffect(() => {
         profiles("profile", Method.GET)
     }, []);
 
+    useEffect(() => {
+        if (id) {
+            if (id === "new") {
+                return
+            }
+
+            task("task/" + id, Method.GET)
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (taskData) {
+            setTitle(taskData.title)
+            setStatus(taskData.status)
+            setPriority(taskData.priority)
+            setAssignee(taskData.assignee ? taskData.assignee.id : null)
+        }
+    }, [taskData]);
+
+    useEffect(() => {
+        if (taskCreateData) {
+            navigate("/tasks/" + taskCreateData.id)
+        }
+        if (taskUpdateData) {
+            navigate("/tasks/" + id)
+        }
+        if (taskDeleteData) {
+            navigate("/tasks")
+        }
+    }, [taskCreateData, taskUpdateData, taskDeleteData]);
+
+    useEffect(() => {
+        if (title) {
+            setTitleMessage(title.length + "/128")
+        } else {
+            setTitleMessage("0/128")
+        }
+    }, [title])
+
+    const save = () => {
+        setSaveMessage("")
+
+        if (!title) {
+            setSaveMessage("Title is missing")
+            return
+        }
+        if (title.length > 128) {
+            setSaveMessage("Title is too long")
+            return
+        }
+        if (!status) {
+            setSaveMessage("Status is missing")
+            return
+        }
+        if (!priority) {
+            setSaveMessage("Severity is missing")
+            return
+        }
+
+        const taskRequest: TaskRequest = {
+            assignee: assignee,
+            title: title,
+            status: status,
+            priority: priority
+        }
+
+        if (id === "new") {
+            taskCreate("task", Method.POST, undefined, taskRequest)
+        } else {
+            taskUpdate("task/" + id, Method.PUT, undefined, taskRequest)
+        }
+    }
+
+    const remove = () => {
+        taskDelete("task/" + id, Method.DELETE)
+    }
+
     return (
         <>
+            <Error title="Failed to load task" message={taskError}/>
             <Split>
-                <Input value="" setValue={value => console.log(value)} type="text" label="Title" required={true}
-                       placeholder="Suspicious activity on service XYZ" message=""/>
-
+                <Input value={title} setValue={setTitle} type="text" label="Title" required={true} placeholder="Suspicious activity on service XYZ" message={titleMessage}/>
                 <Linear>
                     <Text type="p" mono={false} bold={false} highlight={true}>Short and concise description of what has to be done</Text>
                 </Linear>
             </Split>
             <Split>
-                <Select value={TaskStatus.ON_HOLD} setValue={() => {}} options={[
+                <Select value={status} setValue={setStatus} options={[
                     { name: "Idea", value: TaskStatus.IDEA },
                     { name: "Todo", value: TaskStatus.TODO },
                     { name: "On hold", value: TaskStatus.ON_HOLD },
@@ -65,7 +161,7 @@ const TaskEditPage = () => {
                 </Linear>
             </Split>
             <Split>
-                <Select value={TaskPriority.HIGH} setValue={() => {}} options={[
+                <Select value={priority} setValue={setPriority} options={[
                     { name: "High", value: TaskPriority.HIGH },
                     { name: "Medium", value: TaskPriority.MEDIUM },
                     { name: "Low", value: TaskPriority.LOW }
@@ -87,22 +183,40 @@ const TaskEditPage = () => {
                     </Split>
                 </Linear>
             </Split>
-            <Split>
-                {
-                    profilesData ? (
-                        <Select value={null} setValue={() => {}} options={[{name: "Undefined", value: null}, ...profilesData.map(value => {return {name: value.name, value: value.id}})]} label="Assigned" required={false} message=""/>
-                    ) : (
-                        <Skeleton height={32}/>
-                    )
-                }
-                <Linear>
-                    <Text type="p" mono={false} bold={false} highlight={true}>The assignee is responsible for completing the task and communicating updates</Text>
-                    <Text type="p" mono={false} bold={false} highlight={false}>Tasks are usually assigned by the assignee themselves, exceptions are team leader and monitoring</Text>
-                </Linear>
-            </Split>
-            <Button onClick={() => {}} highlight={false}>
-                <Text type="p" mono={false} bold={true} highlight={true}>Delete</Text>
-            </Button>
+            <Linear>
+                <Split>
+                    {
+                        profilesData ? (
+                            <Select value={assignee} setValue={setAssignee} options={[{name: "Undefined", value: null}, ...profilesData.map(value => {return {name: value.name, value: value.id}})]} label="Assigned" required={false} message=""/>
+                        ) : (
+                            <Skeleton height={32}/>
+                        )
+                    }
+                    <Linear>
+                        <Text type="p" mono={false} bold={false} highlight={true}>The assignee is responsible for completing the task and communicating updates</Text>
+                        <Text type="p" mono={false} bold={false} highlight={false}>Tasks are usually assigned by the assignee themselves, exceptions are team leader and monitoring</Text>
+                    </Linear>
+                </Split>
+                <Error title="Failed to load profiles" message={profilesError}/>
+            </Linear>
+            <Linear>
+                <div>
+                    {
+                        id ? (
+                            <Button onClick={remove} highlight={false}>
+                                <Text type="p" mono={false} bold={true} highlight={true}>Delete</Text>
+                            </Button>
+                        ) : null
+                    }
+                    <Button onClick={save} highlight={true}>
+                        <Text type="p" mono={false} bold={true} highlight={true}>Save</Text>
+                    </Button>
+                </div>
+                <Text type="s" mono={false} bold={false} highlight={false}>{saveMessage}</Text>
+                <Error title="Failed to save incident" message={taskCreateError}/>
+                <Error title="Failed to update incident" message={taskUpdateError}/>
+                <Error title="Failed to delete incident" message={taskDeleteError}/>
+            </Linear>
         </>
     )
 }

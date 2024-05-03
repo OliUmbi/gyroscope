@@ -1,4 +1,3 @@
-import {DiscussionResponse} from "./discussion.response.ts";
 import {ProfileResponse} from "./profile.response.ts";
 import {IncidentType} from "../enums/incident-type.enum.ts";
 import {IncidentSeverity} from "../enums/incident-severity.enum.ts";

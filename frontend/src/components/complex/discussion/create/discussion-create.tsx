@@ -8,10 +8,11 @@ import {DiscussionCommentRequest} from "../../../../requests/discussion-comment.
 import {Method} from "../../../../enums/method.enum.ts";
 import useApi from "../../../../hooks/use-api.ts";
 import {IdResponse} from "../../../../responses/id.response.ts";
+import Error from "../../error/error.tsx";
 
 const DiscussionCreate = (props: DiscussionCreateProps) => {
 
-    const [commentCreate, commentCreateData] = useApi<IdResponse>()
+    const [commentCreate, commentCreateData, commentCreateError] = useApi<IdResponse>()
 
     const [body, setBody] = useState<string | null>(null)
     const [bodyMessage, setBodyMessage] = useState<string>("")
@@ -54,6 +55,7 @@ const DiscussionCreate = (props: DiscussionCreateProps) => {
                     <Text type="p" mono={false} bold={true} highlight={true}>Save</Text>
                 </Button>
             </div>
+            <Error title="Failed to save comment" message={commentCreateError}/>
         </div>
     )
 }

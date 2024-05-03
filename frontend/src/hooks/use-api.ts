@@ -2,6 +2,7 @@ import {api} from "../services/api.ts";
 import {useCallback, useState} from "react";
 import {Method} from "../enums/method.enum.ts";
 import {ParamDTO} from "../dtos/param.dto.ts";
+import {ErrorResponse} from "../responses/error.response.ts";
 
 const useApi = <T>(): [(path: string, method: Method, params?: Array<ParamDTO>, body?: any) => void, T | null, string | null] => {
 
@@ -15,9 +16,21 @@ const useApi = <T>(): [(path: string, method: Method, params?: Array<ParamDTO>, 
             setData(null)
         }
 
-        await api.request<T>(path, method, params, body)
-            .then(json => setData(json))
-            .catch(error => setError(error.message));
+        const response = await api.request(path, method, params, body).catch(() => setError("Network error occurred"));
+
+        if (!response) {
+            return
+        }
+
+        const json = await response.json().catch(() => setError("Invalid response"));
+
+        if (!response.ok) {
+            let error: ErrorResponse = json
+            setError(error.error)
+            return
+        }
+
+        setData(json)
     }, [])
 
     return [execute, data, error]

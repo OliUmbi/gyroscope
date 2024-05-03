@@ -1,33 +1,42 @@
-import ScheduleEditItem from "../../components/complex/schedule-edit/item/schedule-edit-item.tsx";
+import ScheduleUpdate from "../../components/complex/schedule/update/schedule-update.tsx";
 import {useEffect} from "react";
 import Linear from "../../components/layout/linear/linear.tsx";
 import useApi from "../../hooks/use-api.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
-import ScheduleEditShift from "../../components/complex/schedule-edit/shift/schedule-edit-shift.tsx";
+import ScheduleCreate from "../../components/complex/schedule/shift/schedule-create.tsx";
 import {Method} from "../../enums/method.enum.ts";
 import useStorage from "../../hooks/use-storage.ts";
 import {ProfileResponse} from "../../responses/profile.response.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const ScheduleEditPage = () => {
 
     const [profileId] = useStorage("profileId")
-    const [profile, profileData] = useApi<ProfileResponse>()
+    const [schedules, schedulesData, schedulesError] = useApi<ProfileResponse>()
 
     useEffect(() => {
         if (profileId) {
-            profile("profile/" + profileId + "/schedule", Method.GET)
+            schedules("profile/" + profileId + "/schedule", Method.GET)
         }
-    }, []);
+    }, [])
+
+    const reload = () => {
+        if (profileId) {
+            schedules("profile/" + profileId + "/schedule", Method.GET)
+        }
+    }
+
 
     return (
         <>
+            <Error title="Failed to load schedule" message={schedulesError}/>
             <Linear>
                 {
-                    profileData ? (
+                    schedulesData && profileId ? (
                         <>
-                            <ScheduleEditShift/>
+                            <ScheduleCreate id={profileId} reload={reload}/>
                             {
-                                profileData.schedule.map((schedule, key) => <ScheduleEditItem schedule={schedule} key={key}/>)
+                                schedulesData.schedule.map((schedule, key) => <ScheduleUpdate schedule={schedule} reload={reload} key={key}/>)
                             }
                         </>
                     ) : (

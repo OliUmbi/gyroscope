@@ -56,9 +56,11 @@ public class TaskController {
         for (TaskDTO taskDTO : taskDTOs) {
             TaskResponse taskResponse = taskMapper.map(taskDTO);
 
-            ProfileDTO assigneeProfileDTO = profileService.load(taskDTO.getAssigneeProfileId());
-            ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
-            taskResponse.setAssignee(assigneeProfileResponse);
+            if (taskDTO.getAssigneeProfileId() != null) {
+                ProfileDTO assigneeProfileDTO = profileService.load(taskDTO.getAssigneeProfileId());
+                ProfileResponse assigneeProfileResponse = profileMapper.map(assigneeProfileDTO);
+                taskResponse.setAssignee(assigneeProfileResponse);
+            }
 
             taskResponses.add(taskResponse);
         }

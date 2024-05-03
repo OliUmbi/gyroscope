@@ -5,10 +5,11 @@ import useApi from "../../hooks/use-api.ts";
 import {useEffect} from "react";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import {Method} from "../../enums/method.enum.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const SchedulePage = () => {
 
-    const [profiles, profilesData] = useApi<ProfileResponse[]>()
+    const [profiles, profilesData, profilesError] = useApi<ProfileResponse[]>()
 
     useEffect(() => {
         profiles("profile/schedule", Method.GET)
@@ -16,6 +17,7 @@ const SchedulePage = () => {
 
     return (
         <>
+            <Error title="Failed to load profiles" message={profilesError}/>
             <Linear>
                 {
                     profilesData ? (

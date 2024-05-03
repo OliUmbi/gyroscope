@@ -16,6 +16,7 @@ import ScheduleEditPage from "./pages/schedule/schedule-edit.page.tsx";
 import IncidentEditPage from "./pages/incident/incident-edit.page.tsx";
 import TaskEditPage from "./pages/task/task-edit.page.tsx";
 import {useEffect, useRef} from "react";
+import AuthenticationInvalid from "./components/complex/authentication/invalid/authentication-invalid.tsx";
 
 const App = () => {
 
@@ -150,6 +151,7 @@ const App = () => {
                         } key={key}/>)
                 }
             </Routes>
+            <AuthenticationInvalid/>
         </div>
     )
 }

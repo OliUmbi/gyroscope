@@ -5,10 +5,11 @@ import {useEffect} from "react";
 import {IncidentResponse} from "../../responses/incident.response.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import {Method} from "../../enums/method.enum.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const IncidentsPage = () => {
 
-    const [incidents, incidentsData] = useApi<IncidentResponse[]>()
+    const [incidents, incidentsData, incidentsError] = useApi<IncidentResponse[]>()
 
     useEffect(() => {
         incidents("incident", Method.GET)
@@ -16,6 +17,7 @@ const IncidentsPage = () => {
 
     return (
         <>
+            <Error title="Failed to load incidents" message={incidentsError}/>
             <Split>
                 {
                     incidentsData ? (

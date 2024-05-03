@@ -20,17 +20,20 @@ import {locale} from "../../utils/locale.util.ts";
 import {IncidentCheckRequest} from "../../requests/incident-check.request.ts";
 import IconButton from "../../components/base/icon-button/icon-button.tsx";
 import {IncidentRequest} from "../../requests/incident.request.ts";
+import {MessageResponse} from "../../responses/message.response.ts";
+import {IdResponse} from "../../responses/id.response.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const IncidentEditPage = () => {
 
     const {id} = useParams()
     const navigate = useNavigate();
 
-    const [incident, incidentData] = useApi<IncidentResponse>()
-    const [incidentCreate, incidentCreateData] = useApi<IdResponse>()
-    const [incidentUpdate, incidentUpdateData] = useApi<MessageResponse>()
-    const [incidentDelete, incidentDeleteData] = useApi<MessageResponse>()
-    const [profiles, profilesData] = useApi<ProfileResponse[]>()
+    const [incident, incidentData, incidentError] = useApi<IncidentResponse>()
+    const [incidentCreate, incidentCreateData, incidentCreateError] = useApi<IdResponse>()
+    const [incidentUpdate, incidentUpdateData, incidentUpdateError] = useApi<MessageResponse>()
+    const [incidentDelete, incidentDeleteData, incidentDeleteError] = useApi<MessageResponse>()
+    const [profiles, profilesData, profilesError] = useApi<ProfileResponse[]>()
 
     const [title, setTitle] = useState<string | null>(null)
     const [titleMessage, setTitleMessage] = useState<string>("")
@@ -205,6 +208,7 @@ const IncidentEditPage = () => {
 
     return (
         <>
+            <Error title="Failed to load incident" message={incidentError}/>
             <Split>
                 <Input value={title} setValue={setTitle} type="text" label="Title" required={true} placeholder="Suspicious activity on service XYZ" message={titleMessage}/>
                 <Linear>
@@ -297,22 +301,25 @@ const IncidentEditPage = () => {
                     </Split>
                 </Linear>
             </Split>
-            <Split>
-                {
-                    profilesData ? (
-                        <Select value={assignee} setValue={setAssignee} options={[{name: "Undefined", value: null}, ...profilesData.map(value => {
-                            return {name: value.name, value: value.id}
-                        })]} label="Assigned" required={false} message=""/>
-                    ) : (
-                        <Skeleton height={32}/>
-                    )
-                }
-                <Linear>
-                    <Text type="p" mono={false} bold={false} highlight={true}>The assignee is responsible for managing the incident, coordinating necessary
-                        actions, and communicating updates</Text>
-                    <Text type="p" mono={false} bold={false} highlight={false}>Usually the monitoring team discovering it or team leader</Text>
-                </Linear>
-            </Split>
+            <Linear>
+                <Split>
+                    {
+                        profilesData ? (
+                            <Select value={assignee} setValue={setAssignee} options={[{name: "Undefined", value: null}, ...profilesData.map(value => {
+                                return {name: value.name, value: value.id}
+                            })]} label="Assigned" required={false} message=""/>
+                        ) : (
+                            <Skeleton height={32}/>
+                        )
+                    }
+                    <Linear>
+                        <Text type="p" mono={false} bold={false} highlight={true}>The assignee is responsible for managing the incident, coordinating necessary
+                            actions, and communicating updates</Text>
+                        <Text type="p" mono={false} bold={false} highlight={false}>Usually the monitoring team discovering it or team leader</Text>
+                    </Linear>
+                </Split>
+                <Error title="Failed to load profiles" message={profilesError}/>
+            </Linear>
             <Linear>
                 {
                     checks.map((check, key) => <IncidentEditCheck value={check} setValue={value => updateCheck(key, value)} remove={() => removeCheck(key)} key={key}/>)
@@ -333,6 +340,9 @@ const IncidentEditPage = () => {
                     </Button>
                 </div>
                 <Text type="s" mono={false} bold={false} highlight={false}>{saveMessage}</Text>
+                <Error title="Failed to save incident" message={incidentCreateError}/>
+                <Error title="Failed to update incident" message={incidentUpdateError}/>
+                <Error title="Failed to delete incident" message={incidentDeleteError}/>
             </Linear>
         </>
     )

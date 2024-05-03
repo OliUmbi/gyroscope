@@ -1,0 +1,12 @@
+@use "../../../styles/variables";
+
+.error {
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+
+  @include variables.layer-highlight();
+}

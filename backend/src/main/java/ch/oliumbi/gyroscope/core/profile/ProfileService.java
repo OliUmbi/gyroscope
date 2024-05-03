@@ -89,6 +89,12 @@ public class ProfileService {
     }
 
     private LocalDateTime nextTime(UUID profileId) {
-        return LocalDateTime.now();
+        List<ProfileScheduleDTO> profileScheduleDTOs = profileRepository.loadScheduleLast(profileId);
+
+        if (profileScheduleDTOs.isEmpty()) {
+            return LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+        }
+
+        return profileScheduleDTOs.getFirst().getTime().withMinute(0).withSecond(0).withNano(0).plusHours(1);
     }
 }

@@ -5,7 +5,7 @@ import {storage} from "./storage.ts";
 const API_URL = import.meta.env.VITE_API_URL
 
 export const api = {
-    async request<T>(path: string, method: Method, params?: Array<ParamDTO>, body?: any): Promise<T> {
+    async request(path: string, method: Method, params?: Array<ParamDTO>, body?: any): Promise<Response> {
 
         const headers: any = {
             "Content-Type": "application/json;charset=UTF-8"
@@ -16,20 +16,13 @@ export const api = {
             headers.authentication = token
         }
 
-        const response = await fetch(api.url(path, params), {
+        return await fetch(api.url(path, params), {
             method: method,
             body: body !== undefined ? JSON.stringify(body) : null,
             mode: "cors",
             cache: "default",
             headers: headers
         });
-
-        if (!response.ok) {
-            throw new Error("Error occurred")
-        }
-
-        return await response.json()
-
     },
     url(path: string, params?: Array<ParamDTO>) {
         let url = API_URL + path

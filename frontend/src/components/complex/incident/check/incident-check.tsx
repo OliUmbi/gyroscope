@@ -7,10 +7,11 @@ import {useEffect} from "react";
 import {Method} from "../../../../enums/method.enum.ts";
 import {MessageResponse} from "../../../../responses/message.response.ts";
 import {IncidentCheckRequest} from "../../../../requests/incident-check.request.ts";
+import Error from "../../error/error.tsx";
 
 const IncidentCheck = (props: IncidentCheckProps) => {
 
-    const [checkUpdate, checkUpdateData] = useApi<MessageResponse>()
+    const [checkUpdate, checkUpdateData, checkUpdateError] = useApi<MessageResponse>()
 
     useEffect(() => {
         if (checkUpdateData) {
@@ -29,12 +30,16 @@ const IncidentCheck = (props: IncidentCheckProps) => {
     }
 
     return (
-        <div className="incident-check">
-            <IconButton onClick={() => update(!props.check.checked)} highlight={false}>{props.check.checked ? "check_box" : "check_box_outline_blank"}</IconButton>
-            <div className="incident-check__body">
-                <Text type="p" mono={false} bold={true} highlight={true}>{props.check.value}</Text>
+        <>
+            <div className="incident-check">
+                <IconButton onClick={() => update(!props.check.checked)}
+                            highlight={false}>{props.check.checked ? "check_box" : "check_box_outline_blank"}</IconButton>
+                <div className="incident-check__body">
+                    <Text type="p" mono={false} bold={true} highlight={true}>{props.check.value}</Text>
+                </div>
             </div>
-        </div>
+            <Error title="Failed to update check" message={checkUpdateError}/>
+        </>
     )
 }
 

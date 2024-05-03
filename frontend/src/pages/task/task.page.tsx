@@ -12,12 +12,13 @@ import Split from "../../components/layout/split/split.tsx";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import {TaskResponse} from "../../responses/task.response.ts";
 import {Method} from "../../enums/method.enum.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const TaskPage = () => {
 
     let {id} = useParams();
 
-    const [task, taskData] = useApi<TaskResponse>()
+    const [task, taskData, taskError] = useApi<TaskResponse>()
 
     useEffect(() => {
         if (id) {
@@ -27,6 +28,7 @@ const TaskPage = () => {
 
     return (
         <>
+            <Error title="Failed to load task" message={taskError}/>
             <Linear>
                 <div>
                     {

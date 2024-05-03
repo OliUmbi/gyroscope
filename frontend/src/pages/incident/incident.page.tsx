@@ -13,11 +13,12 @@ import {dateConvert} from "../../utils/date.util.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import {IncidentResponse} from "../../responses/incident.response.ts";
 import {Method} from "../../enums/method.enum.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const IncidentPage = () => {
 
     let {id} = useParams();
-    const [incident, incidentData] = useApi<IncidentResponse>()
+    const [incident, incidentData, incidentError] = useApi<IncidentResponse>()
 
     useEffect(() => {
         if (id) {
@@ -31,6 +32,7 @@ const IncidentPage = () => {
 
     return (
         <>
+            <Error title="Failed to load incident" message={incidentError}/>
             <Linear>
                 <div>
                     {

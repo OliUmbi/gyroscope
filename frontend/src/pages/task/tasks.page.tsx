@@ -7,10 +7,11 @@ import {TaskStatus} from "../../enums/task-status.enum.ts";
 import Skeleton from "../../components/base/skeleton/skeleton.tsx";
 import TaskSummary from "../../components/complex/task/summary/task-summary.tsx";
 import {Method} from "../../enums/method.enum.ts";
+import Error from "../../components/complex/error/error.tsx";
 
 const TasksPage = () => {
 
-    const [tasks, tasksData] = useApi<TaskResponse[]>()
+    const [tasks, tasksData, tasksError] = useApi<TaskResponse[]>()
 
     useEffect(() => {
         tasks("task", Method.GET)
@@ -18,6 +19,7 @@ const TasksPage = () => {
 
     return (
         <>
+            <Error title="Failed to load tasks" message={tasksError}/>
             <TaskBoard>
                 <TaskColumn name="Idea">
                     {

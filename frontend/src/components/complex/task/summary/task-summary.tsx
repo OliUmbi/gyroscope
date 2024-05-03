@@ -1,7 +1,6 @@
 import "./task-summary.scss";
 import Text from "../../../base/text/text.tsx";
 import {Link} from "react-router-dom";
-import {TaskResponse} from "../../../../responses/task.response.ts";
 import {TaskSummaryProps} from "./task-summary.props.ts";
 
 const TaskSummary = (props: TaskSummaryProps) => {

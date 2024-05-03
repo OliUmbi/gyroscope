@@ -7,10 +7,11 @@ import {useEffect} from "react";
 import {Method} from "../../../enums/method.enum.ts";
 import Skeleton from "../../base/skeleton/skeleton.tsx";
 import {DiscussionResponse} from "../../../responses/discussion.response.ts";
+import Error from "../error/error.tsx";
 
 const Discussion = (props: DiscussionProps) => {
 
-    const [discussion, discussionData] = useApi<DiscussionResponse>()
+    const [discussion, discussionData, discussionError] = useApi<DiscussionResponse>()
 
     useEffect(() => {
         discussion("discussion/" + props.id, Method.GET)
@@ -29,6 +30,7 @@ const Discussion = (props: DiscussionProps) => {
                     <Skeleton height={16}/>
                 )
             }
+            <Error title="Failed to load discussion" message={discussionError}/>
             <DiscussionCreate id={props.id} reload={reload}/>
         </div>
     )
