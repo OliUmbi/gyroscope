@@ -1,17 +1,17 @@
 TRUNCATE TABLE profile CASCADE;
 INSERT INTO profile(id, name, password)
-VALUES ('aaaaaaa1-bbb1-cccc-dddd-eeeeeeeeeeee', 'Minder', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb2-cccc-dddd-eeeeeeeeeeee', 'Smith', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb3-cccc-dddd-eeeeeeeeeeee', 'Loosli', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb4-cccc-dddd-eeeeeeeeeeee', 'Umbricht', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb5-cccc-dddd-eeeeeeeeeeee', 'Besseau', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb6-cccc-dddd-eeeeeeeeeeee', 'Leutenegger', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb7-cccc-dddd-eeeeeeeeeeee', 'Feigenwinter', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb8-cccc-dddd-eeeeeeeeeeee', 'Schnellmann', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bbb9-cccc-dddd-eeeeeeeeeeee', 'Saint Girons', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bb10-cccc-dddd-eeeeeeeeeeee', 'Velez de Villa', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bb11-cccc-dddd-eeeeeeeeeeee', 'Kondracki', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
-       ('aaaaaaa1-bb12-cccc-dddd-eeeeeeeeeeee', 'Goudsmit', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6');
+VALUES ('aaaaaaa1-bbb1-cccc-dddd-eeeeeeeeeeee', 'Merlin', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb2-cccc-dddd-eeeeeeeeeeee', 'Kody', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb3-cccc-dddd-eeeeeeeeeeee', 'Lukas', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb4-cccc-dddd-eeeeeeeeeeee', 'Oliver', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb5-cccc-dddd-eeeeeeeeeeee', 'Leonard', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb6-cccc-dddd-eeeeeeeeeeee', 'Dominic', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb7-cccc-dddd-eeeeeeeeeeee', 'Tobias', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb8-cccc-dddd-eeeeeeeeeeee', 'Luca', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bbb9-cccc-dddd-eeeeeeeeeeee', 'Michael', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bb10-cccc-dddd-eeeeeeeeeeee', 'Sebastian', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bb11-cccc-dddd-eeeeeeeeeeee', 'Piotr', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6'),
+       ('aaaaaaa1-bb12-cccc-dddd-eeeeeeeeeeee', 'Julia', '$2a$10$N75JmlVwH3214SKi/ipxIOvHKCG.WW0uTCVJlbDImlqqk/7VQlua6');
 
 TRUNCATE TABLE profile_session CASCADE;
 INSERT INTO profile_session(id, profile_id, token, expires)

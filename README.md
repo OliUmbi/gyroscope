@@ -8,9 +8,9 @@ npm run build
 ```
 
 ```
-docker build ./database -t gyroscope-database:06
-docker build ./backend -t gyroscope-backend:06
-docker build ./frontend -t gyroscope-frontend:06
+docker build ./database -t gyroscope-database:07
+docker build ./backend -t gyroscope-backend:07
+docker build ./frontend -t gyroscope-frontend:07
 ```
 
 ```
